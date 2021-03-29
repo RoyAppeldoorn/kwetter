@@ -1,20 +1,27 @@
 ---
-name: Feature request
-about: Suggest an idea for this project
-title: ''
-labels: ''
+name: User Story
+about: Describes type of user, what they want, and why; valuable increment of functionality,
+  testable by users.
+title: 'Feature: '
+labels: 'enhancement'
 assignees: ''
 
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+### Description
+As a (role), I'd like to (feature short description), in order to (value it adds).
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+### Acceptance Criteria
+Reference: Done-Done Checklist
+- [ ] Should (testable condition that should be satisfied)
+- [ ] Should (testable condition that should be satisfied)
+- [ ] Should (testable condition that should be satisfied)
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+Also, here are a few points that need to be addressed:
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+1. Constraint 1:
+
+### Tasks
+- [ ] _TBA_
+- [ ] _TBA_
+- [ ] _TBA_
