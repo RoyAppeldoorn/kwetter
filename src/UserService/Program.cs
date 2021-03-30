@@ -2,14 +2,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Ocelot.DependencyInjection;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ApiGateway
+namespace UserService
 {
     public class Program
     {
@@ -20,10 +18,7 @@ namespace ApiGateway
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureAppConfiguration(config =>
-                {
-                    config.AddJsonFile("configuration.json");
-                }).ConfigureWebHostDefaults(webBuilder =>
+                .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
                 });
