@@ -1,4 +1,4 @@
-# kwetter
+# kwetters
 
 ## Project setup
 ```
