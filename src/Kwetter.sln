@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31105.61
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiGateway", "ApiGateway\ApiGateway.csproj", "{F091A46C-85E6-48AB-B89A-1F0525C4403C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiGateway", "Services\ApiGateway\ApiGateway.csproj", "{F091A46C-85E6-48AB-B89A-1F0525C4403C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KweetService", "KweetService\KweetService.csproj", "{63E0E95A-F1F9-4ACF-81E0-130259785563}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KweetService", "Services\KweetService\KweetService.csproj", "{63E0E95A-F1F9-4ACF-81E0-130259785563}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService", "UserService\UserService.csproj", "{9C4BA687-9836-46F0-9334-05DC45CC909F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService", "Services\UserService\UserService.csproj", "{9C4BA687-9836-46F0-9334-05DC45CC909F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
