@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ApiGateway
+namespace Kwetter.Gateway.Web.Gateway
 {
     public class Startup
     {
