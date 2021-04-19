@@ -3,11 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31105.61
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiGateway", "Services\ApiGateway\ApiGateway.csproj", "{F091A46C-85E6-48AB-B89A-1F0525C4403C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{2D0B0796-1775-4CDA-A86D-604AD3E0827A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KweetService", "Services\KweetService\KweetService.csproj", "{63E0E95A-F1F9-4ACF-81E0-130259785563}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "KweetService", "KweetService", "{D1C0AA36-B989-41B1-9B9B-22574EEA2745}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService", "Services\UserService\UserService.csproj", "{9C4BA687-9836-46F0-9334-05DC45CC909F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kwetter.Services.KweetService.API", "Services\KweetService\API\Kwetter.Services.KweetService.API.csproj", "{AC2171DE-E14C-4756-8069-22A1ED261E2C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UserService", "UserService", "{54CD94C9-204D-4065-9F27-07B85D4B0C50}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gateway", "Gateway", "{5470FDAE-6DCC-4282-A16A-E3D707DFC4AA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kwetter.Services.UserService.API", "Services\UserService\API\Kwetter.Services.UserService.API.csproj", "{6D60B2B2-EFFD-4D84-8C36-ADF635573916}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kwetter.Services.Gateway.Web.Gateway", "Services\Gateway\Web.Gateway\Kwetter.Services.Gateway.Web.Gateway.csproj", "{D8E00052-F44B-4581-BD90-E65C9F184981}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{DC613B38-5652-410F-8F30-1A43D31B3967}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kwetter.Services.Common.API", "Services\Common\API\Kwetter.Services.Common.API.csproj", "{8A146B04-8E10-494C-A212-ACF731CDD4B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,21 +27,35 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F091A46C-85E6-48AB-B89A-1F0525C4403C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F091A46C-85E6-48AB-B89A-1F0525C4403C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F091A46C-85E6-48AB-B89A-1F0525C4403C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F091A46C-85E6-48AB-B89A-1F0525C4403C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{63E0E95A-F1F9-4ACF-81E0-130259785563}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{63E0E95A-F1F9-4ACF-81E0-130259785563}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{63E0E95A-F1F9-4ACF-81E0-130259785563}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{63E0E95A-F1F9-4ACF-81E0-130259785563}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9C4BA687-9836-46F0-9334-05DC45CC909F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9C4BA687-9836-46F0-9334-05DC45CC909F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9C4BA687-9836-46F0-9334-05DC45CC909F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9C4BA687-9836-46F0-9334-05DC45CC909F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC2171DE-E14C-4756-8069-22A1ED261E2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC2171DE-E14C-4756-8069-22A1ED261E2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC2171DE-E14C-4756-8069-22A1ED261E2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC2171DE-E14C-4756-8069-22A1ED261E2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D60B2B2-EFFD-4D84-8C36-ADF635573916}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D60B2B2-EFFD-4D84-8C36-ADF635573916}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D60B2B2-EFFD-4D84-8C36-ADF635573916}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D60B2B2-EFFD-4D84-8C36-ADF635573916}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8E00052-F44B-4581-BD90-E65C9F184981}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8E00052-F44B-4581-BD90-E65C9F184981}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8E00052-F44B-4581-BD90-E65C9F184981}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8E00052-F44B-4581-BD90-E65C9F184981}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A146B04-8E10-494C-A212-ACF731CDD4B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A146B04-8E10-494C-A212-ACF731CDD4B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A146B04-8E10-494C-A212-ACF731CDD4B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A146B04-8E10-494C-A212-ACF731CDD4B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D1C0AA36-B989-41B1-9B9B-22574EEA2745} = {2D0B0796-1775-4CDA-A86D-604AD3E0827A}
+		{AC2171DE-E14C-4756-8069-22A1ED261E2C} = {D1C0AA36-B989-41B1-9B9B-22574EEA2745}
+		{54CD94C9-204D-4065-9F27-07B85D4B0C50} = {2D0B0796-1775-4CDA-A86D-604AD3E0827A}
+		{5470FDAE-6DCC-4282-A16A-E3D707DFC4AA} = {2D0B0796-1775-4CDA-A86D-604AD3E0827A}
+		{6D60B2B2-EFFD-4D84-8C36-ADF635573916} = {54CD94C9-204D-4065-9F27-07B85D4B0C50}
+		{D8E00052-F44B-4581-BD90-E65C9F184981} = {5470FDAE-6DCC-4282-A16A-E3D707DFC4AA}
+		{DC613B38-5652-410F-8F30-1A43D31B3967} = {2D0B0796-1775-4CDA-A86D-604AD3E0827A}
+		{8A146B04-8E10-494C-A212-ACF731CDD4B0} = {DC613B38-5652-410F-8F30-1A43D31B3967}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {65436DE8-333B-40BC-A4A7-706AA4596FB5}
