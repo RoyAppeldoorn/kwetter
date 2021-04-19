@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace UserService
+namespace Kwetter.Services.UserService.API
 {
     public class Program
     {
