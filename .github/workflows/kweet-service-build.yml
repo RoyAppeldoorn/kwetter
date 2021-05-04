@@ -1,0 +1,49 @@
+name: .NET
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - src/Services/KweetService/**
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - src/Services/KweetService/**
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+    - uses: actions/checkout@v2
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+        
+    - name: Install dependencies
+      run: dotnet restore ./Services/KweetService/API
+      
+    - name: Build
+      run: dotnet build --no-restore ./Services/KweetService/API
+      
+    - name: Run tests
+      run: dotnet test ./Services/KweetService/Tests
+      
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Run tests
+      run: dotnet test ./Services/KweetService/Tests
+      
+  docker:
+    needs: test
+    runs-on: ubuntu-latest
