@@ -36,8 +36,7 @@ namespace Kwetter.Services.KweetService.API.Application.Commands.LikeKweet
             }
 
             // Add like to the kweet and update
-            KweetLike like = new(request.KweetId, request.UserId);
-            kweet.Likes.Add(like);
+            kweet.AddLike(request.UserId);
 
             bool success = await _kweetRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
             CommandResult commandResult = new()
