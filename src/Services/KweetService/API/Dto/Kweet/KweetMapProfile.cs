@@ -6,7 +6,8 @@ namespace Kwetter.Services.KweetService.API.Dto.Kweet
     {
         public KweetMapProfile()
         {
-            CreateMap<Models.Kweet, KweetDto>();
+            CreateMap<Models.Kweet, KweetDto>().ReverseMap();
+            CreateMap<Models.KweetLike, KweetLikeDto>().ReverseMap();
         }
     }
 }

@@ -12,6 +12,6 @@ namespace Kwetter.Services.KweetService.API.Dto.Kweet
 
         public Guid UserId { get; set; }
 
-        public DateTime LikedDateTime { get; private set; }
+        public DateTime LikedDateTime { get; set; }
     }
 }

@@ -11,6 +11,6 @@ namespace Kwetter.Services.KweetService.API.Dto.Kweet
 
         public string Message { get; set; }
 
-        public ICollection<KweetLikeDto> Likes { get; set; }
+        public List<KweetLikeDto> Likes { get; set; }
     }
 }
