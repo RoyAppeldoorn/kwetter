@@ -27,7 +27,9 @@ namespace Kwetter.Services.KweetService.API.DataAccess.Migrations
                         .HasColumnType("datetime");
 
                     b.Property<string>("Message")
-                        .HasColumnType("text");
+                        .IsRequired()
+                        .HasMaxLength(140)
+                        .HasColumnType("varchar(140)");
 
                     b.Property<byte[]>("UserId")
                         .IsRequired()
@@ -38,40 +40,28 @@ namespace Kwetter.Services.KweetService.API.DataAccess.Migrations
                     b.ToTable("Kweets");
                 });
 
-            modelBuilder.Entity("Kwetter.Services.KweetService.API.Models.KweetLike", b =>
-                {
-                    b.Property<byte[]>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("varbinary(16)");
-
-                    b.Property<byte[]>("KweetId")
-                        .HasColumnType("varbinary(16)");
-
-                    b.Property<DateTime>("LikedDateTime")
-                        .HasColumnType("datetime");
-
-                    b.Property<byte[]>("UserId")
-                        .IsRequired()
-                        .HasColumnType("varbinary(16)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("KweetId");
-
-                    b.ToTable("KweetLike");
-                });
-
-            modelBuilder.Entity("Kwetter.Services.KweetService.API.Models.KweetLike", b =>
-                {
-                    b.HasOne("Kwetter.Services.KweetService.API.Models.Kweet", "Kweet")
-                        .WithMany("Likes")
-                        .HasForeignKey("KweetId");
-
-                    b.Navigation("Kweet");
-                });
-
             modelBuilder.Entity("Kwetter.Services.KweetService.API.Models.Kweet", b =>
                 {
+                    b.OwnsMany("Kwetter.Services.KweetService.API.Models.KweetLike", "Likes", b1 =>
+                        {
+                            b1.Property<byte[]>("KweetId")
+                                .HasColumnType("varbinary(16)");
+
+                            b1.Property<byte[]>("UserId")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("varbinary(16)");
+
+                            b1.Property<DateTime>("LikedDateTime")
+                                .HasColumnType("datetime");
+
+                            b1.HasKey("KweetId", "UserId");
+
+                            b1.ToTable("KweetLike");
+
+                            b1.WithOwner()
+                                .HasForeignKey("KweetId");
+                        });
+
                     b.Navigation("Likes");
                 });
 #pragma warning restore 612, 618

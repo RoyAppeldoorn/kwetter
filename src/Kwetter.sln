@@ -21,6 +21,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{DC613B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kwetter.Services.Common.API", "Services\Common\API\Kwetter.Services.Common.API.csproj", "{8A146B04-8E10-494C-A212-ACF731CDD4B0}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kwetter.Services.Common.Infrastructure", "Services\Common\Infrastructure\Kwetter.Services.Common.Infrastructure.csproj", "{C6767785-C301-45CE-ABF8-579418ED07A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kwetter.Services.KweetService.Tests", "Services\KweetService\Tests\Kwetter.Services.KweetService.Tests.csproj", "{08AF5B8E-6E73-4068-931B-54CF84DDC8DA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +47,14 @@ Global
 		{8A146B04-8E10-494C-A212-ACF731CDD4B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A146B04-8E10-494C-A212-ACF731CDD4B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A146B04-8E10-494C-A212-ACF731CDD4B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6767785-C301-45CE-ABF8-579418ED07A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6767785-C301-45CE-ABF8-579418ED07A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6767785-C301-45CE-ABF8-579418ED07A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6767785-C301-45CE-ABF8-579418ED07A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08AF5B8E-6E73-4068-931B-54CF84DDC8DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08AF5B8E-6E73-4068-931B-54CF84DDC8DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08AF5B8E-6E73-4068-931B-54CF84DDC8DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08AF5B8E-6E73-4068-931B-54CF84DDC8DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -56,6 +68,8 @@ Global
 		{D8E00052-F44B-4581-BD90-E65C9F184981} = {5470FDAE-6DCC-4282-A16A-E3D707DFC4AA}
 		{DC613B38-5652-410F-8F30-1A43D31B3967} = {2D0B0796-1775-4CDA-A86D-604AD3E0827A}
 		{8A146B04-8E10-494C-A212-ACF731CDD4B0} = {DC613B38-5652-410F-8F30-1A43D31B3967}
+		{C6767785-C301-45CE-ABF8-579418ED07A0} = {DC613B38-5652-410F-8F30-1A43D31B3967}
+		{08AF5B8E-6E73-4068-931B-54CF84DDC8DA} = {D1C0AA36-B989-41B1-9B9B-22574EEA2745}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {65436DE8-333B-40BC-A4A7-706AA4596FB5}

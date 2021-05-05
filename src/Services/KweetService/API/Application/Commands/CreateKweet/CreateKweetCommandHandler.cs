@@ -1,4 +1,5 @@
 ﻿using Kwetter.Services.Common.API.CQRS;
+using Kwetter.Services.KweetService.API.DataAccess;
 using Kwetter.Services.KweetService.API.DataAccess.Repositories;
 using Kwetter.Services.KweetService.API.Models;
 using MediatR;
@@ -12,22 +13,20 @@ namespace Kwetter.Services.KweetService.API.Application.Commands.CreateKweet
     {
         private readonly IKweetRepository _kweetRepository;
 
-        public CreateKweetCommandHandler(IKweetRepository kweetRepository)
+        public CreateKweetCommandHandler(IKweetRepository kweetRepository, KweetDbContext kweetDbContext)
         {
             _kweetRepository = kweetRepository ?? throw new ArgumentNullException(nameof(kweetRepository));
         }
 
         public async Task<CommandResult> Handle(CreateKweetCommand request, CancellationToken cancellationToken)
         {
-            var kweet = new Kweet
-            {
-                Id = request.KweetId,
-                Message = request.Message,
-                UserId = request.UserId
-            };
+            Kweet kweet = new(request.KweetId, request.UserId, request.Message);
+            Kweet trackedKweet = _kweetRepository.Create(kweet);
+            bool success = await _kweetRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
 
-            var success = await _kweetRepository.CreateKweet(kweet);
-            return new CommandResult { Success = success };
+            return new CommandResult { 
+                Success = trackedKweet != null && success 
+            };
         }
     }
 }

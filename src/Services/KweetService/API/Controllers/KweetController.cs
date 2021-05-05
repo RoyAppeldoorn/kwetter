@@ -1,5 +1,6 @@
 ﻿using Kwetter.Services.Common.API.CQRS;
 using Kwetter.Services.KweetService.API.Application.Commands.CreateKweet;
+using Kwetter.Services.KweetService.API.Application.Commands.LikeKweet;
 using Kwetter.Services.KweetService.API.Application.Queries.GetKweetsByUserId;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -32,11 +33,23 @@ namespace Kwetter.Services.KweetService.API.Controllers
                 : BadRequest(commandResult);
         }
 
-        [HttpGet("{UserId}")]
+        [HttpPost("like")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetKweetsByUserId(Guid UserId)
+        public async Task<IActionResult> LikeAsync(LikeKweetCommand command)
+        {
+            CommandResult commandResult = await _mediator.Send(command);
+            return commandResult.Success
+                ? new OkObjectResult(commandResult)
+                : BadRequest(commandResult);
+        }
+
+        [HttpGet("{UserId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetKweetsByUserIdAsync(Guid UserId)
         {
             var result = await _mediator.Send(new GetKweetsByUserIdQuery(UserId));
             return result != null ? Ok(result) : BadRequest();

@@ -1,4 +1,5 @@
-﻿using Kwetter.Services.KweetService.API.Models;
+﻿using Kwetter.Services.Common.Infrastructure;
+using Kwetter.Services.KweetService.API.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,22 +13,27 @@ namespace Kwetter.Services.KweetService.API.DataAccess.Repositories
     {
         private readonly KweetDbContext _kweetContext;
 
+        public IUnitOfWork UnitOfWork
+        {
+            get
+            {
+                return _kweetContext;
+            }
+        }
+
         public KweetRepository(KweetDbContext kweetDbContext)
         {
             _kweetContext = kweetDbContext ?? throw new ArgumentNullException(nameof(kweetDbContext));
         }
 
-        public async Task<bool> CreateKweet(Kweet kweet)
+        public Kweet Create(Kweet kweet)
         {
-            _kweetContext.Kweets.Add(kweet);
-            await _kweetContext.SaveChangesAsync();
-
-            return true;
+            return _kweetContext.Kweets.Add(kweet).Entity;
         }
 
         public async Task<Kweet> FindAsync(Guid kweetId, CancellationToken cancellationToken)
         {
-            return await _kweetContext.Kweets.FindAsync(kweetId, cancellationToken);
+            return await _kweetContext.Kweets.FindAsync(new object[] { kweetId }, cancellationToken);
         }
 
         public async Task<IEnumerable<Kweet>> FindKweetsByUserIdAsync(Guid userId, CancellationToken cancellationToken)

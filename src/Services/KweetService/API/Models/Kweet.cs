@@ -6,17 +6,28 @@ namespace Kwetter.Services.KweetService.API.Models
 {
     public class Kweet : Entity
     {
-        public Guid UserId { get; set; }
+        private List<KweetLike> _likes;
 
-        public string Message { get; set; }
+        public Guid UserId { get; init; }
+
+        public string Message { get; init; }
 
         public DateTime CreatedDateTime { get; private set; }
 
-        public ICollection<KweetLike> Likes { get; set; }
+        public ICollection<KweetLike> Likes => _likes;
 
-        public Kweet()
+        /// <summary>
+        /// EF Constructor 
+        /// </summary>
+        protected Kweet() => _likes = new List<KweetLike>();
+
+        public Kweet(Guid id, Guid userId, string message)
         {
+            Id = id;
+            UserId = userId;
+            Message = message;
             CreatedDateTime = DateTime.UtcNow;
+            _likes = new List<KweetLike>();
         }
     }
 }

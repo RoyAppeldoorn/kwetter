@@ -8,14 +8,21 @@ namespace Kwetter.Services.KweetService.API.Models
 {
     public class KweetLike : Entity
     {
-        public Kweet Kweet { get; set; }
+        public Guid KweetId { get; set; }
 
         public Guid UserId { get; set; }
 
         public DateTime LikedDateTime { get; private set; }
 
-        public KweetLike()
+        /// <summary>
+        /// EF constructor
+        /// </summary>
+        protected KweetLike() { }
+
+        public KweetLike(Guid kweetId, Guid userId)
         {
+            KweetId = kweetId;
+            UserId = userId;
             LikedDateTime = DateTime.UtcNow;
         }
     }
