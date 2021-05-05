@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Kwetter.Services.KweetService.API.DataAccess.Migrations
 {
     [DbContext(typeof(KweetDbContext))]
-    [Migration("20210505094839_Initial")]
+    [Migration("20210505104250_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,21 +21,20 @@ namespace Kwetter.Services.KweetService.API.DataAccess.Migrations
 
             modelBuilder.Entity("Kwetter.Services.KweetService.API.Models.Kweet", b =>
                 {
-                    b.Property<byte[]>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("varbinary(16)");
+                        .HasColumnType("char(36)");
 
                     b.Property<DateTime>("CreatedDateTime")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Message")
                         .IsRequired()
                         .HasMaxLength(140)
                         .HasColumnType("varchar(140)");
 
-                    b.Property<byte[]>("UserId")
-                        .IsRequired()
-                        .HasColumnType("varbinary(16)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 
@@ -46,15 +45,15 @@ namespace Kwetter.Services.KweetService.API.DataAccess.Migrations
                 {
                     b.OwnsMany("Kwetter.Services.KweetService.API.Models.KweetLike", "Likes", b1 =>
                         {
-                            b1.Property<byte[]>("KweetId")
-                                .HasColumnType("varbinary(16)");
+                            b1.Property<Guid>("KweetId")
+                                .HasColumnType("char(36)");
 
-                            b1.Property<byte[]>("UserId")
+                            b1.Property<Guid>("UserId")
                                 .ValueGeneratedOnAdd()
-                                .HasColumnType("varbinary(16)");
+                                .HasColumnType("char(36)");
 
                             b1.Property<DateTime>("LikedDateTime")
-                                .HasColumnType("datetime");
+                                .HasColumnType("datetime(6)");
 
                             b1.HasKey("KweetId", "UserId");
 

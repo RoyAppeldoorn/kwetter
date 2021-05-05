@@ -30,10 +30,7 @@ namespace Kwetter.Services.KweetService.API.DataAccess.Configuration
                     .IsRequired(true);
 
                 navigationBuilder.WithOwner();
-            })
-            .Navigation(p => p.Likes)
-            .HasField("_likes")
-            .UsePropertyAccessMode(PropertyAccessMode.Field);
+            });
         }
     }
 }

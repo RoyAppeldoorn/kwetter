@@ -15,5 +15,7 @@ namespace Kwetter.Services.KweetService.API.DataAccess.Repositories
         Task<Kweet> FindAsync(Guid kweetId, CancellationToken cancellationToken);
 
         Task<IEnumerable<Kweet>> FindKweetsByUserIdAsync(Guid userId, CancellationToken cancellationToken);
+
+        void Update(Kweet kweet);
     }
 }

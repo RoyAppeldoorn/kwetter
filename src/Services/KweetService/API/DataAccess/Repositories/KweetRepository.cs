@@ -42,5 +42,10 @@ namespace Kwetter.Services.KweetService.API.DataAccess.Repositories
                 .Where(kweet => kweet.UserId == userId)
                 .ToListAsync(cancellationToken);
         }
+
+        public void Update(Kweet kweet)
+        {
+            _kweetContext.Entry(kweet).State = EntityState.Modified;
+        }
     }
 }
