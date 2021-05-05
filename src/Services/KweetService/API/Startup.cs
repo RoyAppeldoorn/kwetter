@@ -26,7 +26,14 @@ namespace Kwetter.Services.KweetService.API
         public void ConfigureServices(IServiceCollection services)
         {
             var sqlConnectionString = _configuration.GetConnectionString("KweetDatabase");
-            services.AddDbContext<KweetDbContext>(options => options.UseMySQL(sqlConnectionString));
+
+            services.AddDbContextPool<KweetDbContext>(
+                dbContextOptions => dbContextOptions
+                    .UseMySql(sqlConnectionString, ServerVersion.AutoDetect(sqlConnectionString))
+                    .EnableSensitiveDataLogging() // These two calls are optional but help
+                    .EnableDetailedErrors()      // with debugging (remove for production).
+            );
+
             services.AddTransient<IKweetRepository, KweetRepository>();
 
             services.AddDefaultApplicationServices(Assembly.GetAssembly(typeof(Startup)));
