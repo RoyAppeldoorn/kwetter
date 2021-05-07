@@ -3,7 +3,7 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     fontFamily: {
-      sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'sans-serif']
+      sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
     },
     extend: {
       colors: {
@@ -12,12 +12,12 @@ module.exports = {
         'gray-300': '#5D7290',
         'gray-700': '#242C37',
         'gray-800': '#151A21',
-        'gray-900': '#0B0E11'
-      }
-    }
+        'gray-900': '#0B0E11',
+      },
+    },
   },
   variants: {
-    extend: {}
+    extend: {},
   },
-  plugins: []
+  plugins: [],
 };

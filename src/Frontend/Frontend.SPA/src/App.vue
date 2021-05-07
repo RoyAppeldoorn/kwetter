@@ -1,34 +1,25 @@
 <template>
-  <div class="max-w-7xl mx-auto">
-    <div id="nav">
-      <Header />
+  <div class="mx-auto max-w-7xl">
+    <Header />
+    <div class="flex px-2 sm:px-6 lg:px-8">
+      <Sidebar />
+      <router-view />
     </div>
-    <router-view />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import Header from '@/components/Header.vue';
-
 export default defineComponent({
   components: {
-    Header
-  }
+    Header,
+  },
 });
 </script>
 
 <style lang="postcss">
 body {
   @apply bg-gray-900 text-white;
-}
-
-#nav a {
-  font-weight: bold;
-  @apply text-gray-600;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
 }
 </style>
