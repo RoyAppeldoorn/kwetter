@@ -3,38 +3,40 @@ using System;
 using Kwetter.Services.KweetService.API.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Kwetter.Services.KweetService.API.DataAccess.Migrations
 {
     [DbContext(typeof(KweetDbContext))]
-    [Migration("20210505104250_Initial")]
+    [Migration("20210505132409_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 64)
-                .HasAnnotation("ProductVersion", "5.0.5");
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("ProductVersion", "5.0.5")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Kwetter.Services.KweetService.API.Models.Kweet", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDateTime")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Message")
                         .IsRequired()
                         .HasMaxLength(140)
-                        .HasColumnType("varchar(140)");
+                        .HasColumnType("nvarchar(140)");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -46,14 +48,14 @@ namespace Kwetter.Services.KweetService.API.DataAccess.Migrations
                     b.OwnsMany("Kwetter.Services.KweetService.API.Models.KweetLike", "Likes", b1 =>
                         {
                             b1.Property<Guid>("KweetId")
-                                .HasColumnType("char(36)");
+                                .HasColumnType("uniqueidentifier");
 
                             b1.Property<Guid>("UserId")
                                 .ValueGeneratedOnAdd()
-                                .HasColumnType("char(36)");
+                                .HasColumnType("uniqueidentifier");
 
                             b1.Property<DateTime>("LikedDateTime")
-                                .HasColumnType("datetime(6)");
+                                .HasColumnType("datetime2");
 
                             b1.HasKey("KweetId", "UserId");
 

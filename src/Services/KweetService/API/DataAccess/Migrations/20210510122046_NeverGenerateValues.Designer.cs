@@ -4,14 +4,16 @@ using Kwetter.Services.KweetService.API.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Kwetter.Services.KweetService.API.DataAccess.Migrations
 {
     [DbContext(typeof(KweetDbContext))]
-    partial class KweetDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210510122046_NeverGenerateValues")]
+    partial class NeverGenerateValues
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
