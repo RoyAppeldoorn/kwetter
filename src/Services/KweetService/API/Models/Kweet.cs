@@ -1,23 +1,30 @@
 ﻿using Kwetter.Services.Common.API;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Kwetter.Services.KweetService.API.Models
 {
     public class Kweet : Entity
     {
-        public Guid UserId { get; set; }
+        private HashSet<KweetLike> likes;
 
-        public string Message { get; set; }
+        public Guid UserId { get; private set; }
 
-        public DateTime CreatedDateTime { get; set; }
+        public string Message { get; private set; }
 
-        public List<KweetLike> Likes { get; set; }
+        public DateTime CreatedDateTime { get; private set; }
+
+        public IReadOnlySet<KweetLike> Likes => likes;
 
         /// <summary>
         /// EF Constructor 
         /// </summary>
-        protected Kweet() => Likes = new List<KweetLike>();
+        protected Kweet() 
+        {
+            likes = new HashSet<KweetLike>(new KweetLikeEqualityComparer());
+        } 
 
         public Kweet(Guid id, Guid userId, string message)
         {
@@ -25,13 +32,39 @@ namespace Kwetter.Services.KweetService.API.Models
             UserId = userId;
             Message = message;
             CreatedDateTime = DateTime.UtcNow;
-            Likes = new List<KweetLike>();
+            likes = new HashSet<KweetLike>();
         }
 
-        public void AddLike(Guid userId)
+        public bool AddLike(Guid userId)
         {
             KweetLike like = new(Id, userId);
-            Likes.Add(like);
+            if (likes.Contains(like))
+                return false;
+            likes.Add(like);
+            return true;
+        }
+
+        public bool RemoveLike(Guid userId)
+        {
+            KweetLike kweetLike = likes.FirstOrDefault(kweet => kweet.UserId == userId);
+            if (kweetLike == null)
+                return false;
+            likes.Remove(kweetLike);
+            return true;
+        }
+
+        private sealed class KweetLikeEqualityComparer : IEqualityComparer<KweetLike>
+        {
+            /// <summary>
+            /// The like's uniqueness is determined by the user id.
+            /// </summary>
+            /// <param name="x">Like x to compare.</param>
+            /// <param name="y">Like y to compare.</param>
+            /// <returns>Returns a boolean to indicate whether the likes are equal.</returns>
+            public bool Equals(KweetLike x, KweetLike y) => x.UserId == y.UserId;
+
+            /// <inheritdoc cref="IEqualityComparer{T}.GetHashCode(T)"/>
+            public int GetHashCode([DisallowNull] KweetLike obj) => obj.UserId.GetHashCode();
         }
     }
 }
