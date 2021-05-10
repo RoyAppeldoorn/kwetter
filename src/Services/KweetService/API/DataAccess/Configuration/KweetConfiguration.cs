@@ -26,6 +26,12 @@ namespace Kwetter.Services.KweetService.API.DataAccess.Configuration
 
                 navigationBuilder.HasKey(p => new { p.KweetId, p.UserId });
 
+                navigationBuilder.Property(p => p.KweetId).ValueGeneratedNever();
+
+                navigationBuilder.Property(p => p.UserId).ValueGeneratedNever();
+
+                navigationBuilder.Property(p => p.Id).ValueGeneratedNever();
+
                 navigationBuilder.Property(p => p.LikedDateTime)
                     .IsRequired(true);
 
