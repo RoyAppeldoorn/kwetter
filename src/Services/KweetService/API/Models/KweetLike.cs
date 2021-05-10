@@ -8,9 +8,9 @@ namespace Kwetter.Services.KweetService.API.Models
 {
     public class KweetLike : Entity
     {
-        public Guid KweetId { get; set; }
+        public Guid KweetId { get; private set; }
 
-        public Guid UserId { get; set; }
+        public Guid UserId { get; private set; }
 
         public DateTime LikedDateTime { get; private set; }
 
