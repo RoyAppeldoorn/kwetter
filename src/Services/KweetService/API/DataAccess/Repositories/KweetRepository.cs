@@ -31,7 +31,7 @@ namespace Kwetter.Services.KweetService.API.DataAccess.Repositories
             return _kweetContext.Kweets.Add(kweet).Entity;
         }
 
-        public async Task<Kweet> FindAsync(Guid kweetId, CancellationToken cancellationToken)
+        public async ValueTask<Kweet> FindAsync(Guid kweetId, CancellationToken cancellationToken)
         {
             return await _kweetContext.Kweets.FindAsync(new object[] { kweetId }, cancellationToken);
         }
@@ -41,11 +41,6 @@ namespace Kwetter.Services.KweetService.API.DataAccess.Repositories
             return await _kweetContext.Kweets
                 .Where(kweet => kweet.UserId == userId)
                 .ToListAsync(cancellationToken);
-        }
-
-        public void Update(Kweet kweet)
-        {
-            _kweetContext.Entry(kweet).State = EntityState.Modified;
         }
     }
 }
