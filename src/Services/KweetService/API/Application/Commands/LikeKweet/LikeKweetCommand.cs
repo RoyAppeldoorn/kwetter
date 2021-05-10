@@ -7,10 +7,5 @@ using System.Threading.Tasks;
 
 namespace Kwetter.Services.KweetService.API.Application.Commands.LikeKweet
 {
-    public record LikeKweetCommand : IRequest<CommandResult>
-    {
-        public Guid UserId { get; init; }
-
-        public Guid KweetId { get; init; }
-    }
+    public record LikeKweetCommand(Guid UserId, Guid KweetId) : IRequest<CommandResult>;
 }
