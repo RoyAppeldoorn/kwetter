@@ -2,7 +2,6 @@
   <div class="mx-auto max-w-7xl">
     <Header />
     <div class="flex px-2 sm:px-6 lg:px-8">
-      <Sidebar />
       <router-view />
     </div>
   </div>

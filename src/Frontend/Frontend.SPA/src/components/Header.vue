@@ -1,7 +1,7 @@
 <template>
-  <nav class="sticky top-0 z-10 bg-gray-900">
-    <div class="px-2 sm:px-6 lg:px-8 mb-14">
-      <div class="flex items-center justify-between h-16">
+  <nav>
+    <div class="px-2 mb-6 sm:px-6 lg:px-8">
+      <div class="relative flex items-center justify-between h-16">
         <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
           <!-- Mobile menu button-->
           <button
