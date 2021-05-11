@@ -77,3 +77,4 @@ jobs:
           file: ./src/kwetter-kweet-service.Dockerfile
           platforms: linux/arm/v7,linux/amd64
           push: true
+          tags: latest
