@@ -8,8 +8,8 @@ namespace Kwetter.Services.KweetService.Tests
         [Fact]
         public void Test1()
         {
-            bool test = true;
-            Assert.True(test);
+            bool test = false;
+            Assert.False(test);
         }
     }
 }
