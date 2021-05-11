@@ -11,6 +11,10 @@ on:
     paths:
       - src/Services/KweetService/**
 
+defaults:
+  run:
+    working-directory: src
+
 jobs:
   build:
     name: Build
