@@ -13,6 +13,7 @@ on:
 
 jobs:
   build:
+    name: Build
     runs-on: ubuntu-latest
 
     steps:
@@ -30,10 +31,8 @@ jobs:
     - name: Build
       run: dotnet build --no-restore ./Services/KweetService/API
       
-    - name: Run tests
-      run: dotnet test ./Services/KweetService/Tests
-      
   test:
+    name: Test
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -44,6 +43,7 @@ jobs:
       run: dotnet test ./Services/KweetService/Tests
       
   docker:
+    name: Build and push Docker images
     needs: test
     runs-on: ubuntu-latest
     steps:
