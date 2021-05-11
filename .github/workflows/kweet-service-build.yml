@@ -76,4 +76,4 @@ jobs:
           context: src/
           file: ./src/kwetter-kweet-service.Dockerfile
           push: true
-          tags: latest
+          tags: royappeldoorn/kwetter-kweet-service:latest
