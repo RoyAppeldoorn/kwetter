@@ -1,7 +1,7 @@
 ﻿{
   "Routes": [
     {
-      "DownstreamPathTemplate": "/api/kweet",
+      "DownstreamPathTemplate": "/api/kweet/",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -10,7 +10,11 @@
         }
       ],
       "UpstreamPathTemplate": "/kweet",
-      "UpstreamHttpMethod": [ "Get" ]
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "firebase",
+        "AllowedScopes": []
+      }
     },
     {
       "DownstreamPathTemplate": "/api/user",
