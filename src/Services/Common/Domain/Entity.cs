@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Kwetter.Services.Common.API
+namespace Kwetter.Services.Common.Domain
 {
     public abstract class Entity
     {

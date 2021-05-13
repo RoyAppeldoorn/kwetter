@@ -1,9 +1,4 @@
-﻿using Kwetter.Services.Common.API;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Kwetter.Services.Common.Domain;
 
 namespace Kwetter.Services.Common.Infrastructure
 {
