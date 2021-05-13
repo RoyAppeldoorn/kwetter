@@ -3,7 +3,6 @@ using System;
 using Kwetter.Services.KweetService.API.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Kwetter.Services.KweetService.API.DataAccess.Migrations
@@ -15,26 +14,25 @@ namespace Kwetter.Services.KweetService.API.DataAccess.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.5")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("Relational:MaxIdentifierLength", 64)
+                .HasAnnotation("ProductVersion", "5.0.5");
 
             modelBuilder.Entity("Kwetter.Services.KweetService.API.Models.Kweet", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("char(36)");
 
                     b.Property<DateTime>("CreatedDateTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Message")
                         .IsRequired()
                         .HasMaxLength(140)
-                        .HasColumnType("nvarchar(140)");
+                        .HasColumnType("varchar(140)");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 
@@ -46,16 +44,16 @@ namespace Kwetter.Services.KweetService.API.DataAccess.Migrations
                     b.OwnsMany("Kwetter.Services.KweetService.API.Models.KweetLike", "Likes", b1 =>
                         {
                             b1.Property<Guid>("KweetId")
-                                .HasColumnType("uniqueidentifier");
+                                .HasColumnType("char(36)");
 
                             b1.Property<Guid>("UserId")
-                                .HasColumnType("uniqueidentifier");
+                                .HasColumnType("char(36)");
 
                             b1.Property<Guid>("Id")
-                                .HasColumnType("uniqueidentifier");
+                                .HasColumnType("char(36)");
 
                             b1.Property<DateTime>("LikedDateTime")
-                                .HasColumnType("datetime2");
+                                .HasColumnType("datetime(6)");
 
                             b1.HasKey("KweetId", "UserId");
 
