@@ -2,15 +2,13 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Kwetter.Services.KweetService.API.DataAccess.Migrations
+namespace Kwetter.Services.KweetService.API.Infrastructure.Migrations
 {
     [DbContext(typeof(KweetDbContext))]
-    [Migration("20210513094420_Initial")]
-    partial class Initial
+    partial class KweetDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

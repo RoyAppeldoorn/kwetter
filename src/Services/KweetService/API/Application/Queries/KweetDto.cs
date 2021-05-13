@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Kwetter.Services.KweetService.API.Dto.Kweet
+namespace Kwetter.Services.KweetService.API.Application.Queries
 {
     public class KweetDto
     {

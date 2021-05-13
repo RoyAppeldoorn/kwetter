@@ -1,7 +1,7 @@
 ﻿using Kwetter.Services.Common.API.CQRS;
-using Kwetter.Services.KweetService.API.DataAccess;
-using Kwetter.Services.KweetService.API.DataAccess.Repositories;
-using Kwetter.Services.KweetService.API.Models;
+using Kwetter.Services.KweetService.API.Infrastructure;
+using Kwetter.Services.KweetService.API.Infrastructure.Repositories;
+using Kwetter.Services.KweetService.API.Domain;
 using MediatR;
 using System;
 using System.Threading;

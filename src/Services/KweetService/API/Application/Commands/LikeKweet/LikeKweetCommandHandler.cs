@@ -1,5 +1,5 @@
 ﻿using Kwetter.Services.Common.API.CQRS;
-using Kwetter.Services.KweetService.API.DataAccess.Repositories;
+using Kwetter.Services.KweetService.API.Infrastructure.Repositories;
 using MediatR;
 using System;
 using System.Collections.Generic;

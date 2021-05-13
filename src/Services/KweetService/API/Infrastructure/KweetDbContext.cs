@@ -1,11 +1,11 @@
 ﻿using Kwetter.Services.Common.Infrastructure;
-using Kwetter.Services.KweetService.API.DataAccess.Configuration;
-using Kwetter.Services.KweetService.API.Models;
+using Kwetter.Services.KweetService.API.Infrastructure.Configuration;
+using Kwetter.Services.KweetService.API.Domain;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Kwetter.Services.KweetService.API.DataAccess
+namespace Kwetter.Services.KweetService.API.Infrastructure
 {
     public class KweetDbContext : DbContext, IUnitOfWork
     {

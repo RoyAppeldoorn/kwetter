@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
-using Kwetter.Services.KweetService.API.DataAccess.Repositories;
-using Kwetter.Services.KweetService.API.Models;
+using Kwetter.Services.KweetService.API.Infrastructure.Repositories;
+using Kwetter.Services.KweetService.API.Domain;
 using System;
 using System.Threading;
 using System.Threading.Tasks;

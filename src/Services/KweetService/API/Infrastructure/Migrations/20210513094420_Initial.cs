@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Kwetter.Services.KweetService.API.DataAccess.Migrations
+namespace Kwetter.Services.KweetService.API.Infrastructure.Migrations
 {
     public partial class Initial : Migration
     {

@@ -1,5 +1,5 @@
 ﻿using Kwetter.Services.Common.Infrastructure;
-using Kwetter.Services.KweetService.API.Models;
+using Kwetter.Services.KweetService.API.Domain;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Kwetter.Services.KweetService.API.DataAccess.Repositories
+namespace Kwetter.Services.KweetService.API.Infrastructure.Repositories
 {
     public class KweetRepository : IKweetRepository
     {

@@ -1,10 +1,10 @@
-﻿using Kwetter.Services.Common.API;
+﻿using Kwetter.Services.Common.Domain;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
-namespace Kwetter.Services.KweetService.API.Models
+namespace Kwetter.Services.KweetService.API.Domain
 {
     public class Kweet : Entity
     {
@@ -63,7 +63,6 @@ namespace Kwetter.Services.KweetService.API.Models
             /// <returns>Returns a boolean to indicate whether the likes are equal.</returns>
             public bool Equals(KweetLike x, KweetLike y) => x.UserId == y.UserId;
 
-            /// <inheritdoc cref="IEqualityComparer{T}.GetHashCode(T)"/>
             public int GetHashCode([DisallowNull] KweetLike obj) => obj.UserId.GetHashCode();
         }
     }

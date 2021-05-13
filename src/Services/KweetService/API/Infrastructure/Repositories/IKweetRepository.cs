@@ -1,12 +1,12 @@
 ﻿using Kwetter.Services.Common.Infrastructure;
-using Kwetter.Services.KweetService.API.Models;
+using Kwetter.Services.KweetService.API.Domain;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Kwetter.Services.KweetService.API.DataAccess.Repositories
+namespace Kwetter.Services.KweetService.API.Infrastructure.Repositories
 {
     public interface IKweetRepository: IRepository<Kweet>
     {

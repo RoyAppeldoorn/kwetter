@@ -1,10 +1,7 @@
-﻿using Kwetter.Services.Common.API;
+﻿using Kwetter.Services.Common.Domain;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Kwetter.Services.KweetService.API.Models
+namespace Kwetter.Services.KweetService.API.Domain
 {
     public class KweetLike : Entity
     {

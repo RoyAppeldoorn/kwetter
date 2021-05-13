@@ -1,8 +1,8 @@
-﻿using Kwetter.Services.KweetService.API.Models;
+﻿using Kwetter.Services.KweetService.API.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Kwetter.Services.KweetService.API.DataAccess.Configuration
+namespace Kwetter.Services.KweetService.API.Infrastructure.Configuration
 {
     public class KweetConfiguration : IEntityTypeConfiguration<Kweet>
     {

@@ -1,5 +1,4 @@
-﻿using Kwetter.Services.KweetService.API.Dto.Kweet;
-using MediatR;
+﻿using MediatR;
 using System;
 using System.Collections.Generic;
 

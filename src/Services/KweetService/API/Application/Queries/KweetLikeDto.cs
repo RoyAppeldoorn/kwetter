@@ -1,10 +1,6 @@
-﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System;
 
-namespace Kwetter.Services.KweetService.API.Dto.Kweet
+namespace Kwetter.Services.KweetService.API.Application.Queries
 {
     public class KweetLikeDto
     {
