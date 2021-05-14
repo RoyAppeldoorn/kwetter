@@ -20,48 +20,40 @@ export default class HttpRequestHandler {
     });
   }
 
-  public get<TResponse extends Response>(path: string, config?: AxiosRequestConfig): Promise<AxiosResponse<TResponse>> {
-    return this._api
-      .get(path, config)
-      .then((res: AxiosResponse) => {
-        return res.data;
-      })
-      .catch((err: AxiosError) => {
-        throw this.checkStatusCode(err);
-      });
+  public async get<TResponse extends Response>(path: string, config?: AxiosRequestConfig): Promise<AxiosResponse<TResponse>> {
+    try {
+      const res = await this._api.get(path, config);
+      return res.data;
+    } catch (err) {
+      throw this.checkStatusCode(err);
+    }
   }
 
-  public post<TRequest, TResponse extends Response>(path: string, body: TRequest, config?: AxiosRequestConfig): Promise<AxiosResponse<TResponse>> {
-    return this._api
-      .post(path, body, config)
-      .then((res: AxiosResponse) => {
-        return res.data;
-      })
-      .catch((err: AxiosError) => {
-        throw this.checkStatusCode(err);
-      });
+  public async post<TRequest, TResponse extends Response>(path: string, body: TRequest, config?: AxiosRequestConfig): Promise<AxiosResponse<TResponse>> {
+    try {
+      const res = await this._api.post(path, body, config);
+      return res.data;
+    } catch (err) {
+      throw this.checkStatusCode(err);
+    }
   }
 
-  public put<TRequest, TResponse extends Response>(path: string, body: TRequest, config?: AxiosRequestConfig): Promise<AxiosResponse<TResponse>> {
-    return this._api
-      .put(path, body, config)
-      .then((res: AxiosResponse) => {
-        return res.data;
-      })
-      .catch((err: AxiosError) => {
-        throw this.checkStatusCode(err);
-      });
+  public async put<TRequest, TResponse extends Response>(path: string, body: TRequest, config?: AxiosRequestConfig): Promise<AxiosResponse<TResponse>> {
+    try {
+      const res = await this._api.put(path, body, config);
+      return res.data;
+    } catch (err) {
+      throw this.checkStatusCode(err);
+    }
   }
 
-  public delete<TRequest, TResponse extends Response>(path: string, body: TRequest, config?: AxiosRequestConfig): Promise<AxiosResponse<TResponse>> {
-    return this._api
-      .delete(path, body)
-      .then((res: AxiosResponse) => {
-        return res.data;
-      })
-      .catch((err: AxiosError) => {
-        throw this.checkStatusCode(err);
-      });
+  public async delete<TRequest, TResponse extends Response>(path: string, body: TRequest, config?: AxiosRequestConfig): Promise<AxiosResponse<TResponse>> {
+    try {
+      const res = await this._api.delete(path, body);
+      return res.data;
+    } catch (err) {
+      throw this.checkStatusCode(err);
+    }
   }
 
   //   private async getHeaders(): Promise<Headers> {
