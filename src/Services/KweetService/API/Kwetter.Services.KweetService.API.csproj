@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Common\API\Kwetter.Services.Common.API.csproj" />
+    <ProjectReference Include="..\..\Common\Domain\Kwetter.Services.Common.Domain.csproj" />
     <ProjectReference Include="..\..\Common\Infrastructure\Kwetter.Services.Common.Infrastructure.csproj" />
   </ItemGroup>
 

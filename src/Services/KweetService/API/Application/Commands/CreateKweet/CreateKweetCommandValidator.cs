@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Kwetter.Services.KweetService.API.Application.Commands.CreateKweet
 {
-    public class CreateKweetValidator : AbstractValidator<CreateKweetCommand>
+    public class CreateKweetCommandValidator : AbstractValidator<CreateKweetCommand>
     {
         private readonly IKweetRepository _kweetRepository;
 
-        public CreateKweetValidator(IKweetRepository kweetRepository)
+        public CreateKweetCommandValidator(IKweetRepository kweetRepository)
         {
             _kweetRepository = kweetRepository;
 
