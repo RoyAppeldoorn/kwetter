@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { StatusCodes } from 'http-status-codes';
 import BadRequestException from './exceptions/badRequest.exception';
 import HttpException from './exceptions/httpException';
@@ -10,17 +10,11 @@ import UnauthorizedException from './exceptions/unauthorized.exception';
  * Used to communicate with external HTTP endpoints.
  */
 export default class HttpRequestHandler {
-  private _gatewayUrl: string;
-  private _api: AxiosInstance;
+  private static _api = axios.create({
+    baseURL: process.env.VUE_APP_GATEWAY_HOST,
+  });
 
-  constructor(gatewayUrl: string) {
-    this._gatewayUrl = gatewayUrl;
-    this._api = axios.create({
-      baseURL: this._gatewayUrl,
-    });
-  }
-
-  public async get<TResponse extends Response>(path: string, config?: AxiosRequestConfig): Promise<AxiosResponse<TResponse>> {
+  public static async get<TResponse>(path: string, config?: AxiosRequestConfig): Promise<AxiosResponse<TResponse>> {
     try {
       const res = await this._api.get(path, config);
       return res.data;
@@ -29,7 +23,11 @@ export default class HttpRequestHandler {
     }
   }
 
-  public async post<TRequest, TResponse extends Response>(path: string, body: TRequest, config?: AxiosRequestConfig): Promise<AxiosResponse<TResponse>> {
+  public static async post<TRequest, TResponse>(
+    path: string,
+    body: TRequest,
+    config?: AxiosRequestConfig
+  ): Promise<TResponse> {
     try {
       const res = await this._api.post(path, body, config);
       return res.data;
@@ -38,7 +36,11 @@ export default class HttpRequestHandler {
     }
   }
 
-  public async put<TRequest, TResponse extends Response>(path: string, body: TRequest, config?: AxiosRequestConfig): Promise<AxiosResponse<TResponse>> {
+  public static async put<TRequest, TResponse>(
+    path: string,
+    body: TRequest,
+    config?: AxiosRequestConfig
+  ): Promise<AxiosResponse<TResponse>> {
     try {
       const res = await this._api.put(path, body, config);
       return res.data;
@@ -47,7 +49,11 @@ export default class HttpRequestHandler {
     }
   }
 
-  public async delete<TRequest, TResponse extends Response>(path: string, body: TRequest, config?: AxiosRequestConfig): Promise<AxiosResponse<TResponse>> {
+  public static async delete<TRequest, TResponse>(
+    path: string,
+    body: TRequest,
+    config?: AxiosRequestConfig
+  ): Promise<AxiosResponse<TResponse>> {
     try {
       const res = await this._api.delete(path, body);
       return res.data;
@@ -64,7 +70,7 @@ export default class HttpRequestHandler {
   //     return headers;
   //   }
 
-  private checkStatusCode(err: AxiosError<any>): HttpException {
+  private static checkStatusCode(err: AxiosError<any>): HttpException {
     if (!err || !err.response) return new InternalServerException();
     const message: string = err.response.data.message;
     switch (err.response.status) {
