@@ -50,6 +50,8 @@ namespace Kwetter.Services.AuthorizationService.API
             services.AddSingleton(firebaseApp);
             services.AddSingleton<IAuthorizationService, FirebaseAuthorizationService>();
 
+            services.AddCors();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -67,7 +69,9 @@ namespace Kwetter.Services.AuthorizationService.API
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Kwetter.Services.AuthorizationService.API v1"));
             }
 
-            app.UseHttpsRedirection();
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 

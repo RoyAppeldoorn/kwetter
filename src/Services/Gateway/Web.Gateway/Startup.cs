@@ -8,10 +8,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Kwetter.Gateway.Web.Gateway
 {
@@ -28,16 +24,6 @@ namespace Kwetter.Gateway.Web.Gateway
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            //FirebaseApp firebaseApp = FirebaseApp.Create(new AppOptions()
-            //{
-            //    Credential = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") switch
-            //    {
-            //        "Production" => GoogleCredential.FromJson(_configuration["Authorization:Credential"]),
-            //        "Development" => GoogleCredential.FromFile(_configuration["Authorization:Credential"]),
-            //        _ => throw new ArgumentOutOfRangeException("Environment is not Production or Development."),
-            //    }
-            //});
-            //services.AddSingleton(firebaseApp);
             string authenticationProviderKey = "firebase";
 
             services
@@ -59,23 +45,13 @@ namespace Kwetter.Gateway.Web.Gateway
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
-            app.UseRouting();
             app.UseAuthentication();
+
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-
-            app.UseOcelot().Wait();
+            await app.UseOcelot();
         }
     }
 }
