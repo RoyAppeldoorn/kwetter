@@ -1,12 +1,27 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const defaultTheme = require('tailwindcss/defaultTheme');
+
 module.exports = {
   purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: 'class', // or 'media' or 'class'
   theme: {
     fontFamily: {
-      sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+      sans: ['Inter', ...defaultTheme.fontFamily.sans],
     },
     extend: {
       colors: {
+        blue: '#1DA1F2',
+        darkblue: '#2795D9',
+        lightblue: '#EFF9FF',
+        darkest: '#202327',
+        darker: '#1C1F23',
+        dark: '#2f3336',
+        gray: '#657786',
+        light: '#AAB8C2',
+        lighter: '#E1E8ED',
+        lightest: '#F5F8FA',
+        success: '#17BF63',
+        danger: '#E0245E',
         'gray-100': '#DEE3EA',
         'gray-200': '#B2BDCD',
         'gray-300': '#5D7290',
