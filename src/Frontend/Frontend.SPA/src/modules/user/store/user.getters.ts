@@ -1,6 +1,5 @@
 import { GetterTree } from 'vuex';
 import { IUserState } from './User.state';
-import { RootState } from '@/store';
 import { User } from '../user.types';
 
 export enum UserGetterTypes {
@@ -13,7 +12,7 @@ export type UserGetters = {
   [UserGetterTypes.GET_USER](state: IUserState): User | null;
 };
 
-export const userGetters: GetterTree<IUserState, RootState> & UserGetters = {
+export const userGetters: GetterTree<IUserState, IUserState> & UserGetters = {
   [UserGetterTypes.GET_IS_LOGGED_IN](state: IUserState): boolean {
     if (state.user) return true;
     return false;
