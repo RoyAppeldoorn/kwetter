@@ -6,7 +6,6 @@ import { AuthActionTypes } from '../store/auth.actions';
 import firebase from 'firebase';
 import { toUserFromIdToken, User } from '../types';
 import AuthService from '../service';
-import CommandResult from '@/models/cqrs/commandResult';
 
 export default defineComponent({
   name: 'Register',

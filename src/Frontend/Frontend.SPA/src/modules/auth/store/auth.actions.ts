@@ -18,6 +18,7 @@ export interface AuthActions {
 
 export const authActions: ActionTree<AuthState, RootState> & AuthActions = {
   [AuthActionTypes.SET_USER_DATA]({ commit }: AugmentedAuthActionContext, payload: User): void {
+    console.log(payload);
     commit(AuthMutationTypes.SET_USER_DATA, payload);
   },
 };

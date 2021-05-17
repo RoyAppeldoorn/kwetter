@@ -26,6 +26,14 @@ namespace Kwetter.Gateway.Web.Gateway
         {
             string authenticationProviderKey = "firebase";
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
+            });
+
             services
                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                .AddJwtBearer(authenticationProviderKey, options =>
@@ -41,12 +49,14 @@ namespace Kwetter.Gateway.Web.Gateway
                    };
                });
 
-            services.AddOcelot();
+            services.AddOcelot(_configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public async void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors("CorsPolicy");
+
             app.UseAuthentication();
 
             app.UseAuthorization();

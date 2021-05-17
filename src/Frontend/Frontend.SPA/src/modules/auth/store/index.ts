@@ -32,7 +32,7 @@ export type AuthStore<S = AuthState> = Omit<Store<S>, 'getters' | 'commit' | 'di
 };
 
 export const authStore: Module<AuthState, RootState> & AuthModule = {
-  namespaced: true,
+  namespaced: false,
   state: authState,
   mutations: authMutations,
   actions: authActions,
