@@ -5,5 +5,5 @@ export type GuardContext = {
   to: RouteLocationNormalized;
   from: RouteLocationNormalized;
   next: NavigationGuardNext;
-  store: RootStore;
+  rootStore: RootStore;
 };

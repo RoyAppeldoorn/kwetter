@@ -1,12 +1,13 @@
+// import isAuthenticated from '@/guards/isAuthenticated';
 import AuthRoutes from '@/modules/auth/routes';
-import UserRoutes from '@/modules/user/user.routes';
+// import { rootStore } from '@/store'
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import Home from '../views/Home.vue';
 import NotFound from '../views/NotFound.vue';
 
 const routes: RouteRecordRaw[] = [
   {
-    path: '/',
+    path: '/home',
     name: 'Home',
     component: Home,
   },
@@ -24,9 +25,7 @@ const router = createRouter({
 
 // router.beforeEach(async (to, from, next) => {
 //   if (to.matched.some((route) => route.meta.requiresAuth)) {
-//     await requiresAuth({ to, from, next, store })
-//   } else {
-//     await isAuthenticated({ to, from, next, store })
+//     await isAuthenticated({ to, from, next, rootStore })
 //   }
 // })
 
