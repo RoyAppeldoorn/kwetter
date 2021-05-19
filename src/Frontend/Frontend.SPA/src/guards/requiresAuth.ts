@@ -9,13 +9,11 @@ export default async function (ctx: GuardContext): Promise<void> {
     const user: User = toUserFromIdToken(idToken);
 
     if (user.userId) {
-      await ctx.rootStore.dispatch(AuthActionTypes.SET_USER_DATA, user);
+      ctx.rootStore.dispatch(AuthActionTypes.SET_USER_DATA, user);
     }
 
-    if (ctx.to.path === '/login' || ctx.to.path === '/register') {
-      ctx.next('/home');
-    }
-  } else {
     ctx.next();
+  } else {
+    ctx.next({ path: '/login', query: { redirect: ctx.to.fullPath } });
   }
 }
