@@ -1,3 +1,28 @@
+<script lang="ts">
+import { AuthActionTypes } from '@/modules/auth/store/auth.actions';
+import { AuthGetterTypes } from '@/modules/auth/store/auth.getters';
+import { auth } from '@/plugins/firebase';
+import router from '@/router';
+import { useStore } from '@/store';
+import { computed, defineComponent } from 'vue';
+
+export default defineComponent({
+  name: 'Header',
+  setup() {
+    const store = useStore();
+    const loggedIn = computed(() => store.getters[AuthGetterTypes.GET_IS_LOGGED_IN]);
+
+    const signOut = async () => {
+      store.dispatch(AuthActionTypes.SET_USER_DATA, null);
+      await auth.signOut();
+      router.push('/login');
+    };
+
+    return { signOut, loggedIn };
+  },
+});
+</script>
+
 <template>
   <nav>
     <div class="px-2 mb-6 sm:px-6 lg:px-8">
@@ -52,6 +77,14 @@
             <img class="w-auto" src="@/assets/logo.svg" alt="Kwetter" />
           </div>
           <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+            <button
+              v-if="loggedIn"
+              @click="signOut"
+              class="p-1 text-gray-400 bg-gray-800 rounded-full hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+            >
+              Sign out
+            </button>
+
             <button
               class="p-1 text-gray-400 bg-gray-800 rounded-full hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
             >
