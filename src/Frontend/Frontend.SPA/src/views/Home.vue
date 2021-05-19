@@ -1,13 +1,14 @@
 <script lang="ts">
+import { AuthGetterTypes } from '@/modules/auth/store/auth.getters';
 import { useStore } from '@/store';
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'Home',
   setup() {
     const store = useStore();
+    const user = computed(() => store.getters[AuthGetterTypes.GET_USER]);
 
-    const user = store.getters['GET_USER'];
     return { user };
   },
 });
