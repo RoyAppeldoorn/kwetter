@@ -13,12 +13,11 @@ type AugmentedAuthActionContext = {
 } & Omit<ActionContext<AuthState, RootState>, 'commit'>;
 
 export interface AuthActions {
-  [AuthActionTypes.SET_USER_DATA]({ commit }: AugmentedAuthActionContext, payload: User): void;
+  [AuthActionTypes.SET_USER_DATA]({ commit }: AugmentedAuthActionContext, payload: User | null): void;
 }
 
 export const authActions: ActionTree<AuthState, RootState> & AuthActions = {
-  [AuthActionTypes.SET_USER_DATA]({ commit }: AugmentedAuthActionContext, payload: User): void {
-    console.log(payload);
+  [AuthActionTypes.SET_USER_DATA]({ commit }: AugmentedAuthActionContext, payload: User | null): void {
     commit(AuthMutationTypes.SET_USER_DATA, payload);
   },
 };
