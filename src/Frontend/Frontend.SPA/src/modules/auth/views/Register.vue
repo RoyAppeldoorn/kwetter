@@ -1,79 +1,73 @@
 <script lang="ts">
-import { useStore } from '@/store';
 import { useRoute, useRouter } from 'vue-router';
 import { computed, defineComponent, reactive, ref } from 'vue';
-import { AuthActionTypes } from '../store/auth.actions';
-import firebase from 'firebase';
 import { toUserFromIdToken, User } from '../types';
 import AuthService from '../service';
+import CommandResult from '@/models/cqrs/commandResult';
+import { auth } from '@/plugins/firebase';
 
 export default defineComponent({
   name: 'Register',
   setup() {
-    const store = useStore();
     const route = useRoute();
     const router = useRouter();
     const email = ref('');
     const username = ref('');
     const password = ref('');
     const loading = ref(false);
+    const error = ref('');
     const input = reactive({ email, username, password });
     const inputEmpty = computed(() => input.email === '' || input.password === '' || input.username === '');
 
+    const signOut = async () => {
+      await auth.signOut();
+    };
+
     async function register(): Promise<void> {
       loading.value = true;
-      await firebase
-        .auth()
+      await auth
         .createUserWithEmailAndPassword(email.value, password.value)
-        .then(
-          async (result) => {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            let idToken = await result.user!.getIdToken(true);
-            let user: User = toUserFromIdToken(idToken);
-            if (user.userId == null) {
-              const response = await AuthService.SetCustomClaims({
-                idToken: idToken,
-                userName: username.value,
-              });
-              if (response.success) {
-                // get new token with claims set!
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                idToken = await result.user!.getIdToken(true);
-                user = toUserFromIdToken(idToken);
-                await store.dispatch(AuthActionTypes.SET_USER_DATA, user);
+        .then(async (result) => {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          let idToken = await result.user!.getIdToken(true);
+          let user: User = toUserFromIdToken(idToken);
+
+          if (user.userId == null) {
+            //TODO: Make sure firebase user gets custom claims
+            const response: CommandResult = await AuthService.SetCustomClaims({
+              idToken: idToken,
+              userName: username.value,
+            });
+            if (response.success) {
+              if (route.query && route.query.redirectTo) {
+                router.push(route.query.redirectTo as string);
               } else {
-                loading.value = false;
+                router.push('/home');
               }
             } else {
-              await firebase.auth().signOut();
+              loading.value = false;
             }
-          },
-          (error) => {
-            console.log(error);
           }
-        );
-
-      loading.value = false;
-      if (store.getters.GET_USER) {
-        if (route.query && route.query.redirectTo) {
-          router.push(route.query.redirectTo as string);
-        } else {
-          router.push('/home');
-        }
-      }
+        })
+        .catch((err) => {
+          error.value = err.code;
+        })
+        .finally(() => {
+          loading.value = false;
+        });
     }
 
-    return { input, loading, inputEmpty, register };
+    return { input, loading, inputEmpty, register, signOut };
   },
 });
 </script>
 
 <template>
-  <div class="container flex justify-center w-1/4 h-screen px-4 py-8 mx-auto lg:px-0 dark">
-    <div>
-      <!-- <IconTwitter :size="60" class="w-12 h-12 text-blue" /> -->
-      <h1 class="pt-12 text-4xl font-bold dark:text-lightest">Register to Kwetter</h1>
-      <form @submit.prevent="register" class="w-full text-center">
+  <div class="container flex justify-center h-screen px-4 py-8 mx-auto text-center lg:px-0 dark">
+    <div class="w-full sm:w-80">
+      <img class="h-16 mx-auto sm:mt-12" src="@/assets/logo.svg" alt="Kwetter" />
+      <h1 class="pt-10 text-4xl font-bold text-center dark:text-lightest">Register to Kwetter</h1>
+      <form @submit.prevent="register">
         <input
           v-model="input.email"
           type="text"
@@ -94,7 +88,7 @@ export default defineComponent({
         />
         <button
           type="submit"
-          class="w-full h-auto p-4 rounded-full bg-blue focus:outline-none"
+          class="w-full h-auto p-4 mb-6 rounded-full bg-blue focus:outline-none"
           :class="inputEmpty ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-darkblue'"
           :disabled="inputEmpty"
         >
@@ -105,6 +99,7 @@ export default defineComponent({
           <span class="text-blue">Sign in for Kwetter</span>
         </router-link>
       </form>
+      <button @click="signOut">Logout</button>
     </div>
   </div>
 </template>

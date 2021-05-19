@@ -1,16 +1,11 @@
 <script lang="ts">
-import { useStore } from '@/store';
 import { useRoute, useRouter } from 'vue-router';
 import { computed, defineComponent, reactive, ref } from 'vue';
-import { AuthActionTypes } from '../store/auth.actions';
-import firebase from 'firebase';
-import { toUserFromIdToken, User } from '../types';
-import AuthService from '../service';
+import { auth } from '@/plugins/firebase';
 
 export default defineComponent({
   name: 'Register',
   setup() {
-    const store = useStore();
     const route = useRoute();
     const router = useRouter();
     const email = ref('');
@@ -19,45 +14,36 @@ export default defineComponent({
     const input = reactive({ email, password });
     const inputEmpty = computed(() => input.email === '' || input.password === '');
 
-    async function register(): Promise<void> {
+    async function signIn(): Promise<void> {
       loading.value = true;
-      await firebase
-        .auth()
+      await auth
         .signInWithEmailAndPassword(email.value, password.value)
-        .then(
-          async (result) => {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            let idToken = await result.user!.getIdToken(true);
-            let user: User = toUserFromIdToken(idToken);
-
-            await store.dispatch(AuthActionTypes.SET_USER_DATA, user);
-          },
-          (error) => {
-            console.log(error);
+        .then(() => {
+          if (route.query && route.query.redirectTo) {
+            router.push(route.query.redirectTo as string);
+          } else {
+            router.push('/home');
           }
-        );
-
-      loading.value = false;
-      if (store.getters.GET_USER) {
-        if (route.query && route.query.redirectTo) {
-          router.push(route.query.redirectTo as string);
-        } else {
-          router.push('/home');
-        }
-      }
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          loading.value = false;
+        });
     }
 
-    return { input, loading, inputEmpty, register };
+    return { input, loading, inputEmpty, signIn };
   },
 });
 </script>
 
 <template>
-  <div class="container flex justify-center w-1/4 h-screen px-4 py-8 mx-auto lg:px-0 dark">
-    <div>
-      <!-- <IconTwitter :size="60" class="w-12 h-12 text-blue" /> -->
-      <h1 class="pt-12 text-4xl font-bold dark:text-lightest">Login to Kwetter</h1>
-      <form @submit.prevent="register" class="w-full text-center">
+  <div class="container flex justify-center h-screen px-4 py-8 mx-auto lg:px-0 dark">
+    <div class="w-full sm:w-80">
+      <img class="h-16 mx-auto sm:mt-12" src="@/assets/logo.svg" alt="Kwetter" />
+      <h1 class="pt-12 text-4xl font-bold text-center dark:text-lightest">Sign in to Kwetter</h1>
+      <form @submit.prevent="signIn" class="text-center">
         <input
           v-model="input.email"
           type="text"
@@ -72,13 +58,12 @@ export default defineComponent({
         />
         <button
           type="submit"
-          class="w-full h-auto p-4 rounded-full bg-blue focus:outline-none"
+          class="w-full h-auto p-4 mb-6 rounded-full bg-blue focus:outline-none"
           :class="inputEmpty ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-darkblue'"
           :disabled="inputEmpty"
         >
-          <span class="text-lg font-semibold text-lightest">Login</span>
+          <span class="text-lg font-semibold text-lightest">{{ loading ? 'Loading' : 'Sign in' }}</span>
         </button>
-        <span v-if="loading">Loading...</span>
         <router-link to="/register">
           <span class="text-blue">Sign up for Kwetter</span>
         </router-link>
