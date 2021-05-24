@@ -1,9 +1,9 @@
 using System;
 using Xunit;
 
-namespace Kwetter.Services.KweetService.Tests
+namespace Kwetter.Services.KweetService.Tests.Commands
 {
-    public class UnitTest1
+    public class CreateKweetCommandTest
     {
         [Fact]
         public void Test1()
