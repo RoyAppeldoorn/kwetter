@@ -14,6 +14,9 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "firebase",
         "AllowedScopes": []
+      },
+      "AddHeadersToRequest": {
+        "UserId": "Claims[UserId] > value > |"
       }
     },
     {
