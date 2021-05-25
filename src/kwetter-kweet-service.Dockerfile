@@ -7,6 +7,7 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
 COPY ["Services/KweetService/API/Kwetter.Services.KweetService.API.csproj", "Services/KweetService/API/"]
+COPY ["Services/Common/Domain/Kwetter.Services.Common.Domain.csproj", "Services/Common/Domain/"]
 COPY ["Services/Common/API/Kwetter.Services.Common.API.csproj", "Services/Common/API/"]
 COPY ["Services/Common/Infrastructure/Kwetter.Services.Common.Infrastructure.csproj", "Services/Common/Infrastructure/"]
 RUN dotnet restore "Services/KweetService/API/Kwetter.Services.KweetService.API.csproj"

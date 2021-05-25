@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\API\Kwetter.Services.Common.API.csproj" />
+    <ProjectReference Include="..\Domain\Kwetter.Services.Common.Domain.csproj" />
   </ItemGroup>
 
 </Project>

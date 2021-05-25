@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
-using Kwetter.Services.KweetService.API.DataAccess.Repositories;
-using Kwetter.Services.KweetService.API.Dto.Kweet;
+using Kwetter.Services.KweetService.API.Infrastructure.Repositories;
 using MediatR;
 using System;
 using System.Collections.Generic;
