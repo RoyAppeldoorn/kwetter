@@ -48,24 +48,24 @@ export default defineComponent({
           v-model="input.email"
           type="text"
           placeholder="Email"
-          class="w-full px-2 py-4 my-6 text-xl transition-colors duration-75 border-2 rounded border-lighter dark:border-dark focus:outline-none dark:bg-black dark:text-light focus:border-blue dark:focus:border-blue"
+          class="w-full px-2 py-4 my-6 text-xl transition-colors duration-75 border-2 rounded border-lighter dark:border-dark focus:outline-none dark:bg-black dark:text-light focus:border-red dark:focus:border-red"
         />
         <input
           v-model="input.password"
           type="password"
           placeholder="Password"
-          class="w-full px-2 py-4 mb-6 text-xl transition-colors duration-75 border-2 rounded border-lighter dark:border-dark focus:outline-none dark:bg-black dark:text-light focus:border-blue dark:focus:border-blue"
+          class="w-full px-2 py-4 mb-6 text-xl transition-colors duration-75 border-2 rounded border-lighter dark:border-dark focus:outline-none dark:bg-black dark:text-light focus:border-red dark:focus:border-red"
         />
         <button
           type="submit"
-          class="w-full h-auto p-4 mb-6 rounded-full bg-blue focus:outline-none"
+          class="w-full h-auto p-4 mb-6 rounded-full bg-red focus:outline-none"
           :class="inputEmpty ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-darkblue'"
           :disabled="inputEmpty"
         >
           <span class="text-lg font-semibold text-lightest">{{ loading ? 'Loading' : 'Sign in' }}</span>
         </button>
         <router-link to="/register">
-          <span class="text-blue">Sign up for Kwetter</span>
+          <span class="text-red">Sign up for Kwetter</span>
         </router-link>
       </form>
     </div>
