@@ -6,6 +6,7 @@ import { GuardContext } from '../types';
 export default async function (ctx: GuardContext): Promise<void> {
   if (auth.currentUser) {
     const idToken = await auth.currentUser.getIdToken();
+    console.log(idToken);
     const user: User = toUserFromIdToken(idToken);
 
     if (user.userId) {
