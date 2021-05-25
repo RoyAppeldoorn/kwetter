@@ -4,23 +4,16 @@ import requiresAuth from '@/guards/requiresAuth';
 import AuthRoutes from '@/modules/auth/routes';
 import { rootStore } from '@/store';
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import Home from '../views/Home.vue';
 import NotFound from '../views/NotFound.vue';
+import homeRoutes from '@/modules/home/routes';
 
 const routes: RouteRecordRaw[] = [
-  {
-    path: '/home',
-    name: 'Home',
-    component: Home,
-    meta: {
-      requiresAuth: true,
-    },
-  },
   {
     path: '/:catchAll(.*)',
     component: NotFound,
   },
   ...AuthRoutes,
+  homeRoutes,
 ];
 
 const router = createRouter({
