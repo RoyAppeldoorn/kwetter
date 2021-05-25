@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kwetter.Services.Authorizat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kwetter.Services.Common.Domain", "Services\Common\Domain\Kwetter.Services.Common.Domain.csproj", "{413FED57-B7AD-434F-ACF0-5EC7E0139375}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kwetter.Services.Common.Tests", "Services\Common\Tests\Kwetter.Services.Common.Tests.csproj", "{387BEB4B-17DE-44AB-9780-26896177A889}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kwetter.Services.Common.Tests", "Services\Common\Tests\Kwetter.Services.Common.Tests.csproj", "{387BEB4B-17DE-44AB-9780-26896177A889}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

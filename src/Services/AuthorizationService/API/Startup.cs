@@ -43,7 +43,7 @@ namespace Kwetter.Services.AuthorizationService.API
                 Credential = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") switch
                 {
                     "Production" => GoogleCredential.FromJson(_configuration["Authorization:Credential"]),
-                    "Development" => GoogleCredential.FromFile("C:/Users/Roy-t/Desktop/kwetter/kwetter-a60c1-firebase-adminsdk-3a0h3-3592a6c11e.json"),
+                    "Development" => GoogleCredential.FromFile("C:/Users/Roy/Desktop/kwetter/kwetter-a60c1-firebase-adminsdk-3a0h3-3592a6c11e.json"),
                     _ => throw new ArgumentOutOfRangeException("Environment is not Production or Development."),
                 }
             });
@@ -71,7 +71,7 @@ namespace Kwetter.Services.AuthorizationService.API
 
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 
             app.UseRouting();
 
