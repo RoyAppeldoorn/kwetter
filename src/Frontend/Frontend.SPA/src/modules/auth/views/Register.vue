@@ -42,6 +42,8 @@ export default defineComponent({
               if (route.query && route.query.redirectTo) {
                 router.push(route.query.redirectTo as string);
               } else {
+                // refresh IdToken so it contains the newly added claims
+                await result.user!.getIdToken(true);
                 router.push('/home');
               }
             } else {

@@ -14,6 +14,8 @@ export default async function (ctx: GuardContext): Promise<void> {
 
     if (ctx.to.path === '/login' || ctx.to.path === '/register') {
       ctx.next('/home');
+    } else {
+      ctx.next();
     }
   } else {
     ctx.next();
