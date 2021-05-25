@@ -15,7 +15,7 @@ export default defineComponent({
     <Header />
     <div class="flex px-2 sm:px-6 lg:px-8">
       <NavigationSidebar />
-      <router-view />
+      <router-view class="px-12" />
       <TrendingSidebar />
     </div>
   </div>
