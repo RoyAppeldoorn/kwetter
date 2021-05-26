@@ -2,7 +2,7 @@
 import { useRoute, useRouter } from 'vue-router';
 import { computed, defineComponent, reactive, ref } from 'vue';
 import { toUserFromIdToken, User } from '../types';
-import AuthService from '../service';
+import { setCustomClaims } from '../service';
 import CommandResult from '@/models/cqrs/commandResult';
 import { auth } from '@/plugins/firebase';
 
@@ -30,7 +30,7 @@ export default defineComponent({
 
           if (user.userId == null) {
             //TODO: Make sure firebase user gets custom claims
-            const response: CommandResult = await AuthService.SetCustomClaims({
+            const response: CommandResult = await setCustomClaims({
               idToken: idToken,
               userName: username.value,
             });

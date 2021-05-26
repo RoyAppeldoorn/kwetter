@@ -1,13 +1,7 @@
 import CommandResult from '@/models/cqrs/commandResult';
-import api from '@/utils/axios';
-import HttpRequestHandler from '@/utils/httpRequestHandler';
-import { AxiosResponse } from 'axios';
+import { httpClient } from '@/utils/httpClient';
 import ClaimsCommand from './dto/ClaimsCommand';
 
-class AuthService {
-  async SetCustomClaims(claimCommand: ClaimsCommand) {
-    return HttpRequestHandler.post<ClaimsCommand, CommandResult>('/api/authorization/claims', claimCommand);
-  }
-}
-
-export default new AuthService();
+export const setCustomClaims = async (command: ClaimsCommand): Promise<CommandResult> => {
+  return await httpClient.post<ClaimsCommand, CommandResult>('/api/authorization/claims', command);
+};
