@@ -2,7 +2,7 @@ import { RootState } from '@/store';
 import { GetterTree } from 'vuex';
 import { KweetState } from './kweet.state';
 
-export enum KweetGetterTypes {};
+export enum KweetGetterTypes {}
 
 export type KweetGetters = {};
 

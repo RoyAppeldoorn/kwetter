@@ -6,7 +6,7 @@ import { createLogger, createStore } from 'vuex';
 
 export interface RootState {
   auth: AuthState;
-  kweet: KweetState
+  kweet: KweetState;
 }
 
 export type RootStore = AuthStore<Pick<RootState, 'auth'>> & KweetStore<Pick<RootState, 'kweet'>>;
@@ -14,7 +14,7 @@ export type RootStore = AuthStore<Pick<RootState, 'auth'>> & KweetStore<Pick<Roo
 export const rootStore = createStore({
   modules: {
     auth: authStore,
-    kweet: kweetStore
+    kweet: kweetStore,
   },
   plugins: [createLogger()],
 });
