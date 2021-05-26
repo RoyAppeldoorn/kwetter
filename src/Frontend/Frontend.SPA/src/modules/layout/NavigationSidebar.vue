@@ -37,11 +37,11 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="lg:w-1/4 flex flex-col justify-between">
+  <div class="flex flex-col justify-between lg:w-1/4">
     <div>
       <NavigationSidebarTab id="home" label="Home" to="/home" :selected="selectedTab === 'home'" @selectTab="selectTab">
         <template #icon>
-          <IconHome :size="28" class="mr-4 ml-1" />
+          <IconHome :size="28" class="ml-1 mr-4" />
         </template>
       </NavigationSidebarTab>
       <NavigationSidebarTab
@@ -52,7 +52,7 @@ export default defineComponent({
         @selectTab="selectTab"
       >
         <template #icon>
-          <IconHashtag :size="28" class="mr-4 ml-1" />
+          <IconHashtag :size="28" class="ml-1 mr-4" />
         </template>
       </NavigationSidebarTab>
       <NavigationSidebarTab
@@ -63,14 +63,14 @@ export default defineComponent({
         @selectTab="selectTab"
       >
         <template #icon>
-          <IconUser :size="28" class="mr-4 ml-1" />
+          <IconUser :size="28" class="ml-1 mr-4" />
         </template>
       </NavigationSidebarTab>
       <button
-        class="text-gray-100 bg-red rounded-full font-semibold focus:outline-none w-12 h-12 lg:w-full lg:h-auto p-3 hover:bg-darkred transition-colors duration-75"
+        class="w-12 h-12 p-3 font-semibold text-gray-100 transition-colors duration-75 rounded-full bg-red focus:outline-none lg:w-full lg:h-auto hover:bg-darkred"
         @click="showCreateFormDialog = true"
       >
-        <p class="hidden lg:block">Tweet</p>
+        <p class="hidden lg:block">Kweet</p>
         <IconPlus :size="24" class="inline-flex items-center justify-center lg:hidden" />
       </button>
     </div>
