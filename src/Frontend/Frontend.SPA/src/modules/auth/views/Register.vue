@@ -35,6 +35,7 @@ export default defineComponent({
               userName: username.value,
             });
             if (response.success) {
+              console.log('here2');
               if (route.query && route.query.redirectTo) {
                 router.push(route.query.redirectTo as string);
               } else {
@@ -48,9 +49,11 @@ export default defineComponent({
           }
         })
         .catch((err) => {
+          console.log('here6');
           error.value = err.code;
         })
         .finally(() => {
+          console.log('here7');
           loading.value = false;
         });
     }
@@ -90,7 +93,9 @@ export default defineComponent({
           :class="inputEmpty ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-darkred'"
           :disabled="inputEmpty"
         >
-          <span class="text-lg font-semibold text-gray-100">{{ loading ? 'Loading..' : 'Sign up' }}</span>
+          <span class="text-lg font-semibold text-gray-100">
+            {{ loading ? 'Loading..' : 'Sign up' }}
+          </span>
         </button>
         <router-link to="/login">
           <span class="text-red hover:text-darkred">Sign in for Kwetter</span>

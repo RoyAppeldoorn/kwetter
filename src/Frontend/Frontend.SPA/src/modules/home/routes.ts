@@ -5,7 +5,7 @@ import BaseLayout from '../layout/BaseLayout.vue';
 
 const routes: RouteRecordRaw[] = [
   {
-    path: '',
+    path: '/home',
     component: Home,
     meta: {
       requiresAuth: true,

@@ -19,7 +19,6 @@ export function toUserFromIdToken(idToken: string): User {
   };
   return user;
 }
-
 interface GoogleJwtPayload extends JwtPayload {
   email: string;
   email_verified: boolean;
