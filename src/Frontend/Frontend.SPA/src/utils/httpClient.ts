@@ -25,15 +25,21 @@ class HttpClient {
   }
 
   get<T = any, R = AxiosResponse<T>>(path: string, config?: AxiosRequestConfig): Promise<R> {
-    return this.httpClient.get<T, R>(path, config);
+    return this.httpClient.get(path, config).then((res: AxiosResponse<R>) => {
+      return res.data;
+    });
   }
 
   post<T = any, R = AxiosResponse<T>>(path: string, body: T, config?: AxiosRequestConfig): Promise<R> {
-    return this.httpClient.post(path, body, config);
+    return this.httpClient.post(path, body, config).then((res: AxiosResponse<R>) => {
+      return res.data;
+    });
   }
 
   put<T = any, R = AxiosResponse<T>>(path: string, body: T, config?: AxiosRequestConfig): Promise<R> {
-    return this.httpClient.put(path, body, config);
+    return this.httpClient.put(path, body, config).then((res: AxiosResponse<R>) => {
+      return res.data;
+    });
   }
 
   delete<T = any, R = AxiosResponse<T>>(path: string, config?: AxiosRequestConfig): Promise<R> {
