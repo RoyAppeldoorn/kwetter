@@ -3,10 +3,10 @@ using Kwetter.Services.AuthorizationService.API.Domain;
 using Kwetter.Services.AuthorizationService.API.Infrastructure.Repositories;
 using Kwetter.Services.AuthorizationService.API.Infrastructure.Services;
 using Kwetter.Services.Common.API.CQRS;
+using Kwetter.Services.Common.Infrastructure.Messaging;
 using MediatR;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,11 +16,13 @@ namespace Kwetter.Services.AuthorizationService.API.Application.Commands.SetCust
     {
         private readonly IAuthorizationService _authorizationService;
         private readonly IIdentityRepository _identityRepository;
+        private readonly IMessagePublisher _messagePublisher;
 
-        public SetCustomClaimsCommandHandler(IAuthorizationService authorizationService, IIdentityRepository identityRepository)
+        public SetCustomClaimsCommandHandler(IAuthorizationService authorizationService, IIdentityRepository identityRepository, IMessagePublisher messagePublisher)
         {
             _authorizationService = authorizationService ?? throw new ArgumentNullException(nameof(authorizationService));
             _identityRepository = identityRepository ?? throw new ArgumentNullException(nameof(identityRepository));
+            _messagePublisher = messagePublisher ?? throw new ArgumentNullException(nameof(messagePublisher));
         }
 
         public async Task<CommandResult> Handle(SetCustomClaimsCommand request, CancellationToken cancellationToken)
@@ -44,6 +46,7 @@ namespace Kwetter.Services.AuthorizationService.API.Application.Commands.SetCust
                 await _authorizationService.SetUserClaimsAsync(openId, claims, cancellationToken);
                 identity = _identityRepository.Create(newIdentity);
                 await _identityRepository.UnitOfWork.SaveEntitiesAsync();
+                await _messagePublisher.PublishMessageAsync("IdentityCreated", newIdentity);
             }
 
             commandResult.Success = identity != default;

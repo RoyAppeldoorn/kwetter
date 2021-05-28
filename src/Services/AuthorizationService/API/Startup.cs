@@ -4,6 +4,7 @@ using Kwetter.Services.AuthorizationService.API.Infrastructure;
 using Kwetter.Services.AuthorizationService.API.Infrastructure.Repositories;
 using Kwetter.Services.AuthorizationService.API.Infrastructure.Services;
 using Kwetter.Services.Common.API;
+using Kwetter.Services.Common.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -37,21 +38,22 @@ namespace Kwetter.Services.AuthorizationService.API
                     .UseMySql(sqlConnectionString, ServerVersion.AutoDetect(sqlConnectionString)));
 
             services.AddTransient<IIdentityRepository, IdentityRepository>();
+            services.AddSingleton<IAuthorizationService, FirebaseAuthorizationService>();
 
             FirebaseApp firebaseApp = FirebaseApp.Create(new AppOptions()
             {
                 Credential = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") switch
                 {
                     "Production" => GoogleCredential.FromJson(_configuration["Authorization:Credential"]),
-                    "Development" => GoogleCredential.FromFile("C:/Users/Roy/Desktop/kwetter/kwetter-a60c1-firebase-adminsdk-3a0h3-3592a6c11e.json"),
+                    "Development" => GoogleCredential.FromFile("C:/Users/Roy-t/Desktop/kwetter/kwetter-a60c1-firebase-adminsdk-3a0h3-3592a6c11e.json"),
                     _ => throw new ArgumentOutOfRangeException("Environment is not Production or Development."),
                 }
             });
             services.AddSingleton(firebaseApp);
-            services.AddSingleton<IAuthorizationService, FirebaseAuthorizationService>();
+
+            services.AddMessagePublishing("AuthorizationService");
 
             services.AddCors();
-
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
