@@ -8,14 +8,8 @@ namespace Kwetter.Services.UserService.API.Application.IntegrationEventHandlers.
 {
     public class IdentityCreatedIntegrationEvent
     {
-        /// <summary>
-        /// Gets and sets the user id.
-        /// </summary>
         public Guid UserId { get; set; }
 
-        /// <summary>
-        /// Gets and sets the username.
-        /// </summary>
         public string UserName { get; set; }
     }
 }

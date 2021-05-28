@@ -19,15 +19,15 @@ namespace Kwetter.Services.UserService.API.Application.IntegrationEventHandlers.
         public async Task HandleMessageAsync(string messageType, IdentityCreatedIntegrationEvent notification, CancellationToken cancellationToken = default)
         {
             User user = await _userRepository.FindByIdAsync(notification.UserId, cancellationToken);
+            
             if (user != default)
                 throw new UserIntegrationException("A user with the proposed user id already exists.");
             user = await _userRepository.FindByUserNameAsync(notification.UserName, cancellationToken);
             if (user != default)
                 throw new UserIntegrationException("A user with the proposed user name already exists.");
-
+           
             user = new(notification.UserId, notification.UserName);
             _userRepository.Create(user);
-
             bool success = await _userRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
             if (!success)
                 throw new UserIntegrationException("Failed to handle IdentityCreatedIntegrationEvent.");

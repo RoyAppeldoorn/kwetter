@@ -1,4 +1,5 @@
-﻿using Kwetter.Services.AuthorizationService.API.Application.Dtos;
+﻿using Kwetter.Services.AuthorizationService.API.Application.DomainEvents;
+using Kwetter.Services.AuthorizationService.API.Application.Dtos;
 using Kwetter.Services.AuthorizationService.API.Domain;
 using Kwetter.Services.AuthorizationService.API.Infrastructure.Repositories;
 using Kwetter.Services.AuthorizationService.API.Infrastructure.Services;
@@ -46,7 +47,10 @@ namespace Kwetter.Services.AuthorizationService.API.Application.Commands.SetCust
                 await _authorizationService.SetUserClaimsAsync(openId, claims, cancellationToken);
                 identity = _identityRepository.Create(newIdentity);
                 await _identityRepository.UnitOfWork.SaveEntitiesAsync();
-                await _messagePublisher.PublishMessageAsync("IdentityCreated", newIdentity);
+
+                // publish domain event to rabbitmq
+                IdentityCreatedDomainEvent identityCreatedDomainEvent = new(userId: newIdentity.Id, userName: newIdentity.UserName);
+                await _messagePublisher.PublishMessageAsync("IdentityCreated", identityCreatedDomainEvent);
             }
 
             commandResult.Success = identity != default;
