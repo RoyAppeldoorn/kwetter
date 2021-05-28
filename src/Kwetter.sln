@@ -33,6 +33,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kwetter.Services.Common.Dom
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kwetter.Services.Common.Tests", "Services\Common\Tests\Kwetter.Services.Common.Tests.csproj", "{387BEB4B-17DE-44AB-9780-26896177A889}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FollowService", "FollowService", "{58C1A950-43D0-4600-AC69-EEC41A72B139}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kwetter.Services.FollowService.API", "Services\FollowService\API\Kwetter.Services.FollowService.API.csproj", "{C43C9BBA-E673-4A13-998C-6EF68533C262}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +79,10 @@ Global
 		{387BEB4B-17DE-44AB-9780-26896177A889}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{387BEB4B-17DE-44AB-9780-26896177A889}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{387BEB4B-17DE-44AB-9780-26896177A889}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C43C9BBA-E673-4A13-998C-6EF68533C262}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C43C9BBA-E673-4A13-998C-6EF68533C262}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C43C9BBA-E673-4A13-998C-6EF68533C262}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C43C9BBA-E673-4A13-998C-6EF68533C262}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -94,6 +102,8 @@ Global
 		{60EB5FE4-A29F-4B09-AE5A-858650231E92} = {F279085F-8AC6-4A27-A369-C4CB0E75DC87}
 		{413FED57-B7AD-434F-ACF0-5EC7E0139375} = {DC613B38-5652-410F-8F30-1A43D31B3967}
 		{387BEB4B-17DE-44AB-9780-26896177A889} = {DC613B38-5652-410F-8F30-1A43D31B3967}
+		{58C1A950-43D0-4600-AC69-EEC41A72B139} = {2D0B0796-1775-4CDA-A86D-604AD3E0827A}
+		{C43C9BBA-E673-4A13-998C-6EF68533C262} = {58C1A950-43D0-4600-AC69-EEC41A72B139}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {65436DE8-333B-40BC-A4A7-706AA4596FB5}
