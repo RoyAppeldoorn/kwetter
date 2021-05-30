@@ -37,42 +37,40 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="flex flex-col justify-between lg:w-1/4">
-    <div>
-      <NavigationSidebarTab id="home" label="Home" to="/home" :selected="selectedTab === 'home'" @selectTab="selectTab">
-        <template #icon>
-          <IconHome :size="28" class="ml-1 mr-4" />
-        </template>
-      </NavigationSidebarTab>
-      <NavigationSidebarTab
-        id="mentions"
-        label="Mentions"
-        to="/mentions"
-        :selected="selectedTab === 'mentions'"
-        @selectTab="selectTab"
-      >
-        <template #icon>
-          <IconHashtag :size="28" class="ml-1 mr-4" />
-        </template>
-      </NavigationSidebarTab>
-      <NavigationSidebarTab
-        id="profile"
-        label="Profile"
-        to="/profile"
-        :selected="selectedTab === 'profile'"
-        @selectTab="selectTab"
-      >
-        <template #icon>
-          <IconUser :size="28" class="ml-1 mr-4" />
-        </template>
-      </NavigationSidebarTab>
-      <button
-        class="w-12 h-12 p-3 font-semibold text-gray-100 transition-colors duration-75 rounded-full bg-red focus:outline-none lg:w-full lg:h-auto hover:bg-darkred"
-        @click="showCreateFormDialog = true"
-      >
-        <p class="hidden lg:block">Kweet</p>
-        <IconPlus :size="24" class="inline-flex items-center justify-center lg:hidden" />
-      </button>
-    </div>
+  <div class="flex flex-col lg:w-1/3">
+    <NavigationSidebarTab id="home" label="Home" to="/home" :selected="selectedTab === 'home'" @selectTab="selectTab">
+      <template #icon>
+        <IconHome :size="28" class="ml-1 mr-4" />
+      </template>
+    </NavigationSidebarTab>
+    <NavigationSidebarTab
+      id="mentions"
+      label="Mentions"
+      to="/mentions"
+      :selected="selectedTab === 'mentions'"
+      @selectTab="selectTab"
+    >
+      <template #icon>
+        <IconHashtag :size="28" class="ml-1 mr-4" />
+      </template>
+    </NavigationSidebarTab>
+    <NavigationSidebarTab
+      id="profile"
+      label="Profile"
+      :to="'/u/' + user.userName"
+      :selected="selectedTab === 'profile'"
+      @selectTab="selectTab"
+    >
+      <template #icon>
+        <IconUser :size="28" class="ml-1 mr-4" />
+      </template>
+    </NavigationSidebarTab>
+    <button
+      class="w-12 h-12 p-3 font-semibold text-gray-100 transition-colors duration-75 rounded-full bg-red focus:outline-none lg:w-full lg:h-auto hover:bg-darkred"
+      @click="showCreateFormDialog = true"
+    >
+      <p class="hidden lg:block">Kweet</p>
+      <IconPlus :size="24" class="inline-flex items-center justify-center lg:hidden" />
+    </button>
   </div>
 </template>

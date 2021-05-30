@@ -24,7 +24,6 @@ export default defineComponent({
       await auth
         .createUserWithEmailAndPassword(email.value, password.value)
         .then(async (result) => {
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           let idToken = await result.user!.getIdToken(true);
           let user: User = toUserFromIdToken(idToken);
 
@@ -35,7 +34,6 @@ export default defineComponent({
               userName: username.value,
             });
             if (response.success) {
-              console.log('here2');
               if (route.query && route.query.redirectTo) {
                 router.push(route.query.redirectTo as string);
               } else {
@@ -45,15 +43,16 @@ export default defineComponent({
               }
             } else {
               loading.value = false;
+              await auth.signOut();
             }
+          } else {
+            await auth.signOut();
           }
         })
         .catch((err) => {
-          console.log('here6');
           error.value = err.code;
         })
         .finally(() => {
-          console.log('here7');
           loading.value = false;
         });
     }

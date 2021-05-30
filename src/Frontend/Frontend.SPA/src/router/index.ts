@@ -6,6 +6,7 @@ import { rootStore } from '@/store';
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import NotFound from '../views/NotFound.vue';
 import homeRoutes from '@/modules/home/routes';
+import profileRoutes from '@/modules/profile/routes';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -14,6 +15,7 @@ const routes: RouteRecordRaw[] = [
   },
   ...AuthRoutes,
   homeRoutes,
+  profileRoutes,
 ];
 
 const router = createRouter({

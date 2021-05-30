@@ -12,15 +12,15 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="md:block hidden w-1/3 h-full relative">
-    <div class="w-full rounded-2xl bg-gray-800 dark:bg-darkest hidden lg:block">
+  <div class="relative hidden w-1/2 h-full md:block">
+    <div class="hidden w-full bg-gray-800 rounded-2xl dark:bg-darkest lg:block">
       <div class="p-4">
-        <p class="text-lg font-bold dark:text-gray-100">Trends</p>
+        <p class="text-lg font-bold dark:text-gray-100">Who to follow</p>
       </div>
       <button
         v-for="trend in trends"
         :key="trend.name"
-        class="w-full flex hover:bg-lighter dark:hover:bg-darker p-3 border-t border-lighter dark:border-dark focus:outline-none transition-colors duration-75"
+        class="flex w-full p-3 transition-colors duration-75 border-t hover:bg-lighter dark:hover:bg-darker border-lighter dark:border-dark focus:outline-none"
       >
         <div>
           <p class="text-sm font-bold leading-tight dark:text-gray-100">
@@ -30,7 +30,7 @@ export default defineComponent({
       </button>
 
       <button
-        class="p-4 w-full hover:bg-lighter dark:hover:bg-darker text-left text-red border-t border-lighter dark:border-dark rounded-b-2xl focus:outline-none transition-colors duration-75"
+        class="w-full p-4 text-left transition-colors duration-75 border-t hover:bg-lighter dark:hover:bg-darker text-red border-lighter dark:border-dark rounded-b-2xl focus:outline-none"
       >
         Show More
       </button>
