@@ -13,6 +13,7 @@ namespace Kwetter.Services.Common.API
             serviceCollection.AddAutoMapper(applicationAssembly);
             serviceCollection.AddMediatR(applicationAssembly);
             serviceCollection.AddValidatorsFromAssembly(applicationAssembly);
+            serviceCollection.AddScoped(typeof(IPipelineBehavior<,>), typeof(ExceptionBehavior<,>));
             serviceCollection.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             serviceCollection.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
             return serviceCollection;

@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Kwetter.Services.Common.API.CQRS
 {
-    public class CommandResult : Response
+    public abstract class Response
     {
+        public bool Success { get; set; }
 
+        public List<string> Errors { get; set; } = new();
     }
 }

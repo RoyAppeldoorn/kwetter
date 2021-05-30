@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Kwetter.Services.Common.API.CQRS
 {
-    public class CommandResult : Response
+    public class QueryResponse<T> : Response where T : class
     {
-
+        public T Data { get; set; }
     }
 }
