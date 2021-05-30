@@ -1,5 +1,5 @@
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent } from 'vue';
 import IconPlus from '../../icons/IconPlus.vue';
 import NavigationSidebarTab from './NavigationSidebarTab.vue';
 import IconHome from '../../icons/IconHome.vue';
@@ -17,19 +17,9 @@ export default defineComponent({
     IconUser,
   },
   setup() {
-    const selectedTab = ref('home');
     const store = useStore();
-    const showDropdown = ref(false);
-    const showCreateFormDialog = ref(false);
     const user = computed(() => store.getters[AuthGetterTypes.GET_USER]);
-    function selectTab(tab: string) {
-      selectedTab.value = tab;
-    }
     return {
-      selectedTab,
-      selectTab,
-      showDropdown,
-      showCreateFormDialog,
       user,
     };
   },
@@ -43,24 +33,12 @@ export default defineComponent({
         <IconHome :size="28" class="ml-1 mr-4" />
       </template>
     </NavigationSidebarTab>
-    <NavigationSidebarTab
-      id="mentions"
-      label="Mentions"
-      to="/mentions"
-      :selected="selectedTab === 'mentions'"
-      @selectTab="selectTab"
-    >
+    <NavigationSidebarTab id="mentions" label="Mentions" to="/mentions">
       <template #icon>
         <IconHashtag :size="28" class="ml-1 mr-4" />
       </template>
     </NavigationSidebarTab>
-    <NavigationSidebarTab
-      id="profile"
-      label="Profile"
-      :to="'/u/' + user.userName"
-      :selected="selectedTab === 'profile'"
-      @selectTab="selectTab"
-    >
+    <NavigationSidebarTab id="profile" label="Profile" :to="'/u/' + user.userName">
       <template #icon>
         <IconUser :size="28" class="ml-1 mr-4" />
       </template>
@@ -74,3 +52,13 @@ export default defineComponent({
     </button>
   </div>
 </template>
+
+<style scoped>
+.router-link-active {
+  @apply text-red;
+}
+.router-link-active > svg {
+  @apply fill-current;
+  @apply text-red;
+}
+</style>
