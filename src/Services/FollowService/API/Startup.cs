@@ -1,7 +1,13 @@
+using Kwetter.Services.Common.API;
+using Kwetter.Services.Common.Infrastructure;
+using Kwetter.Services.FollowService.API.Application.IntegrationEventHandlers;
+using Kwetter.Services.FollowService.API.Infrastructure;
+using Kwetter.Services.FollowService.API.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -10,22 +16,36 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Kwetter.Services.FollowService.API
 {
     public class Startup
     {
+        private IConfiguration _configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var sqlConnectionString = _configuration.GetConnectionString("KweetDatabase");
+
+            services.AddDbContext<FollowDbContext>(
+                dbContextOptions => dbContextOptions
+                    .UseMySql(sqlConnectionString, ServerVersion.AutoDetect(sqlConnectionString)));
+
+            services.AddTransient<IUserRepository, UserRepository>();
+
+            services.AddDefaultApplicationServices(Assembly.GetAssembly(typeof(Startup)));
+
+            services.AddMessagePublishing("FollowService", builder => {
+                builder.WithHandler<UserCreatedIntegrationEventHandler>("UserCreated");
+            });
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
