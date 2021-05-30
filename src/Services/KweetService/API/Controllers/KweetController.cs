@@ -67,9 +67,9 @@ namespace Kwetter.Services.KweetService.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetKweetsByUserIdAsync(Guid UserId)
+        public async Task<IActionResult> GetKweetsByUserIdAsync(Guid userId)
         {
-            var result = await _mediator.Send(new GetKweetsByUserIdQuery(UserId));
+            var result = await _mediator.Send(new GetKweetsByUserIdQuery(userId));
             return result != null ? Ok(result) : BadRequest();
         }
 
