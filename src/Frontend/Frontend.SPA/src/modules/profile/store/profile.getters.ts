@@ -8,11 +8,11 @@ export enum ProfileGetterTypes {
 }
 
 export type ProfileGetters = {
-  [ProfileGetterTypes.GET_PROFILE](state: ProfileState): Profile;
+  [ProfileGetterTypes.GET_PROFILE](state: ProfileState): Profile | null;
 };
 
 export const profileGetters: GetterTree<ProfileState, RootState> & ProfileGetters = {
-  [ProfileGetterTypes.GET_PROFILE](state: ProfileState): Profile {
+  [ProfileGetterTypes.GET_PROFILE](state: ProfileState): Profile | null {
     return state.profile;
   },
 };

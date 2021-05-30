@@ -1,15 +1,9 @@
 import { Profile } from '../types';
 
 export type ProfileState = {
-  profile: Profile;
+  profile: Profile | null;
 };
 
 export const profileState: ProfileState = {
-  profile: {
-    id: 0,
-    username: '',
-    bio: '',
-    location: '',
-    pictureUrl: '',
-  },
+  profile: null,
 };
