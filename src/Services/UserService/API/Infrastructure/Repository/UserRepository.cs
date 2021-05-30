@@ -13,13 +13,7 @@ namespace Kwetter.Services.UserService.API.Infrastructure.Repository
     {
         private readonly UserDbContext _userContext;
 
-        public IUnitOfWork UnitOfWork
-        {
-            get
-            {
-                return _userContext;
-            }
-        }
+        public IUnitOfWork UnitOfWork => _userContext;
 
         public UserRepository(UserDbContext userDbContext)
         {
