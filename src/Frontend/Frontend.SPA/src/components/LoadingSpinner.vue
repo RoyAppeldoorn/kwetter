@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, h, ref, toRefs } from 'vue';
+import { defineComponent, h, toRefs } from 'vue';
 
 export default defineComponent({
   name: 'LoadingSpinner',
@@ -14,25 +14,14 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { size, color } = toRefs(props);
-    const borderColor = ref('');
-    const primaryTheme = '#1da1f2 rgba(39, 149, 217, 0.2) #1da1f2 rgba(39, 149, 217, 0.2)';
-    const whiteTheme = '#F5F8FA rgba(245, 248, 250, 0.2) #F5F8FA rgba(245, 248, 250, 0.2)';
-
-    if (color.value === 'primary') {
-      borderColor.value = primaryTheme;
-    }
-
-    if (color.value === 'white') {
-      borderColor.value = whiteTheme;
-    }
+    const { size } = toRefs(props);
 
     return () =>
       h('div', {
         class: ['loading-spinner', 'inline-block'],
         style: {
           '--size': size.value,
-          '--borderColor': borderColor.value,
+          '--borderColor': '#FF3146 rgba(39, 149, 217, 0.2) #FF3146 rgba(39, 149, 217, 0.2)',
         },
       });
   },
