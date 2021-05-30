@@ -11,7 +11,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="mx-auto max-w-7xl">
+  <div class="mx-auto max-w-screen-2xl">
     <Header />
     <div class="flex px-2 sm:px-6 lg:px-8">
       <NavigationSidebar />
