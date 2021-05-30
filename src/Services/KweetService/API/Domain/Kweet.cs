@@ -26,13 +26,12 @@ namespace Kwetter.Services.KweetService.API.Domain
             likes = new HashSet<KweetLike>(new KweetLikeEqualityComparer());
         } 
 
-        public Kweet(Guid id, Guid userId, string message)
+        public Kweet(Guid id, Guid userId, string message) : this()
         {
             Id = id;
             UserId = userId;
             Message = message;
             CreatedDateTime = DateTime.UtcNow;
-            likes = new HashSet<KweetLike>();
         }
 
         public bool AddLike(Guid userId)

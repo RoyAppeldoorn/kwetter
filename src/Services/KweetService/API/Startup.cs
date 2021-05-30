@@ -27,7 +27,7 @@ namespace Kwetter.Services.KweetService.API
         {
             var sqlConnectionString = _configuration.GetConnectionString("KweetDatabase");
 
-            services.AddDbContextPool<KweetDbContext>(
+            services.AddDbContext<KweetDbContext>(
                 dbContextOptions => dbContextOptions
                     .UseMySql(sqlConnectionString, ServerVersion.AutoDetect(sqlConnectionString)));
 
@@ -52,7 +52,7 @@ namespace Kwetter.Services.KweetService.API
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
             }
 
-            ApplyDatabaseMigrations(app.ApplicationServices);
+            //ApplyDatabaseMigrations(app.ApplicationServices);
 
             app.UseHttpsRedirection();
 
@@ -66,16 +66,16 @@ namespace Kwetter.Services.KweetService.API
             });
         }
 
-        private static void ApplyDatabaseMigrations(IServiceProvider applicationServices)
-        {
-            using var serviceScope = applicationServices
-                .GetRequiredService<IServiceScopeFactory>()
-                .CreateScope();
+        //private static void ApplyDatabaseMigrations(IServiceProvider applicationServices)
+        //{
+        //    using var serviceScope = applicationServices
+        //        .GetRequiredService<IServiceScopeFactory>()
+        //        .CreateScope();
 
-            using var context = new KweetDbContext(serviceScope.ServiceProvider
-                .GetRequiredService<DbContextOptions<KweetDbContext>>());
+        //    using var context = new KweetDbContext(serviceScope.ServiceProvider
+        //        .GetRequiredService<DbContextOptions<KweetDbContext>>());
 
-            context.Database.Migrate();
-        }
+        //    context.Database.Migrate();
+        //}
     }
 }
