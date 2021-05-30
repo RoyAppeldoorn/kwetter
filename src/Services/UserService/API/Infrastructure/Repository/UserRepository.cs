@@ -37,12 +37,8 @@ namespace Kwetter.Services.UserService.API.Infrastructure.Repository
             string loweredUserName = userName.ToLower();
             return await _userContext.Users
                 .AsQueryable().Where(user => user.Username == loweredUserName)
+                .Include(p => p.Profile)
                 .SingleOrDefaultAsync(cancellationToken);
-        }
-
-        public User Update(User user)
-        {
-            return _userContext.Update(user).Entity;
         }
     }
 }

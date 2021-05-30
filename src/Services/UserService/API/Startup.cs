@@ -30,17 +30,19 @@ namespace Kwetter.Services.UserService.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var sqlConnectionString = _configuration.GetConnectionString("KweetDatabase");
+
+            services.AddDbContextPool<UserDbContext>(
+                dbContextOptions => dbContextOptions
+                    .UseMySql(sqlConnectionString, ServerVersion.AutoDetect(sqlConnectionString)));
+
+            services.AddTransient<IUserRepository, UserRepository>();
+
             services.AddDefaultApplicationServices(Assembly.GetAssembly(typeof(Startup)));
 
             services.AddMessagePublishing("UserService", builder => {
                 builder.WithHandler<IdentityCreatedIntegrationEventHandler>("IdentityCreated");
             });
-
-            var sqlConnectionString = _configuration.GetConnectionString("KweetDatabase");
-            services.AddDbContextPool<UserDbContext>(
-                dbContextOptions => dbContextOptions
-                    .UseMySql(sqlConnectionString, ServerVersion.AutoDetect(sqlConnectionString)));
-            services.AddTransient<IUserRepository, UserRepository>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

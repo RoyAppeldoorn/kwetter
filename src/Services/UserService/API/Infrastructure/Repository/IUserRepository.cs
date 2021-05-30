@@ -12,8 +12,6 @@ namespace Kwetter.Services.UserService.API.Infrastructure.Repository
     {
         User Create(User user);
 
-        User Update(User user);
-
         Task<User> FindByIdAsync(Guid id, CancellationToken cancellationToken);
 
         Task<User> FindByUserNameAsync(string userName, CancellationToken cancellationToken);

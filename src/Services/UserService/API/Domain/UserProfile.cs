@@ -9,7 +9,7 @@ namespace Kwetter.Services.UserService.API.Domain
     public class UserProfile : Entity
     {
         public string Bio { get; private set; }
-
+        
         public string PictureUrl { get; private set; }
 
         public string Location { get; private set; }
