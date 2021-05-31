@@ -29,16 +29,14 @@ namespace Kwetter.Services.AuthorizationService.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDefaultApplicationServices(Assembly.GetAssembly(typeof(Startup)));
-
             var sqlConnectionString = _configuration.GetConnectionString("KweetDatabase");
-
             services.AddDbContextPool<IdentityDbContext>(
                 dbContextOptions => dbContextOptions
                     .UseMySql(sqlConnectionString, ServerVersion.AutoDetect(sqlConnectionString)));
-
             services.AddTransient<IIdentityRepository, IdentityRepository>();
             services.AddSingleton<IAuthorizationService, FirebaseAuthorizationService>();
+            services.AddDefaultApplicationServices(Assembly.GetAssembly(typeof(Startup)));
+            services.AddMessagePublishing("AuthorizationService");
 
             FirebaseApp firebaseApp = FirebaseApp.Create(new AppOptions()
             {
@@ -50,15 +48,12 @@ namespace Kwetter.Services.AuthorizationService.API
                 }
             });
             services.AddSingleton(firebaseApp);
-
-            services.AddMessagePublishing("AuthorizationService");
-
-            services.AddCors();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Kwetter.Services.AuthorizationService.API", Version = "v1" });
             });
+            services.VerifyDatabaseConnection<IdentityDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

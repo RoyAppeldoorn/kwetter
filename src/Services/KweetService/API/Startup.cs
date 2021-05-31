@@ -26,13 +26,10 @@ namespace Kwetter.Services.KweetService.API
         public void ConfigureServices(IServiceCollection services)
         {
             var sqlConnectionString = _configuration.GetConnectionString("KweetDatabase");
-
             services.AddDbContext<KweetDbContext>(
                 dbContextOptions => dbContextOptions
                     .UseMySql(sqlConnectionString, ServerVersion.AutoDetect(sqlConnectionString)));
-
             services.AddTransient<IKweetRepository, KweetRepository>();
-
             services.AddDefaultApplicationServices(Assembly.GetAssembly(typeof(Startup)));
 
             services.AddControllers();
@@ -40,6 +37,7 @@ namespace Kwetter.Services.KweetService.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
             });
+            services.VerifyDatabaseConnection<KweetDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

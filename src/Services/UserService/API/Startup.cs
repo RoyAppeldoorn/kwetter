@@ -31,13 +31,10 @@ namespace Kwetter.Services.UserService.API
         public void ConfigureServices(IServiceCollection services)
         {
             var sqlConnectionString = _configuration.GetConnectionString("KweetDatabase");
-
             services.AddDbContextPool<UserDbContext>(
                 dbContextOptions => dbContextOptions
                     .UseMySql(sqlConnectionString, ServerVersion.AutoDetect(sqlConnectionString)));
-
             services.AddTransient<IUserRepository, UserRepository>();
-
             services.AddDefaultApplicationServices(Assembly.GetAssembly(typeof(Startup)));
 
             services.AddMessagePublishing("UserService", builder => {
@@ -49,6 +46,7 @@ namespace Kwetter.Services.UserService.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
             });
+            services.VerifyDatabaseConnection<UserDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
