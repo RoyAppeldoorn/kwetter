@@ -6,6 +6,8 @@ import { ProfileActionTypes } from '../store/profile.actions';
 import { ProfileGetterTypes } from '../store/profile.getters';
 import LoadingSpinner from '@/components/LoadingSpinner.vue';
 import IconMapMarker from '@/icons/IconMapMarker.vue';
+import { AuthActionTypes } from '@/modules/auth/store/auth.actions';
+import { AuthGetterTypes } from '@/modules/auth/store/auth.getters';
 
 export default defineComponent({
   name: 'Profile',
@@ -23,19 +25,24 @@ export default defineComponent({
     const route = useRoute();
     const handle = ref(route.params.name as string);
     const profile = computed(() => store.getters[ProfileGetterTypes.GET_PROFILE]);
+    const user = computed(() => store.getters[AuthGetterTypes.GET_USER]);
+    const followers = computed(() => store.getters[ProfileGetterTypes.GET_FOLLOWER_COUNT]);
+    const following = computed(() => store.getters[ProfileGetterTypes.GET_FOLLOWING_COUNT]);
 
     onBeforeMount(async () => {
       await store.dispatch(ProfileActionTypes.GET_PROFILE_DETAILS, handle.value);
       state.initialLoadDone = true;
     });
 
-    onMounted(() => {
+    onMounted(async () => {
+      await store.dispatch(ProfileActionTypes.GET_PROFILE_FOLLOWS, user.value!.userId);
       watch(
         () => route.params.name,
         async (name) => {
           if (name) {
             state.initialLoadDone = false;
             await store.dispatch(ProfileActionTypes.GET_PROFILE_DETAILS, name as string);
+            await store.dispatch(ProfileActionTypes.GET_PROFILE_FOLLOWS, handle.value);
             state.initialLoadDone = true;
           }
         }
@@ -45,6 +52,8 @@ export default defineComponent({
     return {
       ...toRefs(state),
       profile,
+      followers,
+      following,
     };
   },
 });
@@ -75,6 +84,8 @@ export default defineComponent({
           <IconMapMarker />
           <p>{{ profile.location }}</p>
         </div>
+        <div v-if="profile.followers">{{ followers }}</div>
+        <div v-if="profile.followings">{{ following }}</div>
       </div>
     </div>
   </div>
