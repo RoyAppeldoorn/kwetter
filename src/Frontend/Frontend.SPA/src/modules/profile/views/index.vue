@@ -1,12 +1,11 @@
 <script lang="ts">
-import { reactive, toRefs, defineComponent, onBeforeMount, ref, onMounted, watch, computed } from 'vue';
+import { defineComponent, onBeforeMount, ref, computed } from 'vue';
 import { useStore } from '@/store';
 import { useRoute } from 'vue-router';
 import { ProfileActionTypes } from '../store/profile.actions';
 import { ProfileGetterTypes } from '../store/profile.getters';
 import LoadingSpinner from '@/components/LoadingSpinner.vue';
 import IconMapMarker from '@/icons/IconMapMarker.vue';
-import { AuthActionTypes } from '@/modules/auth/store/auth.actions';
 import { AuthGetterTypes } from '@/modules/auth/store/auth.getters';
 
 export default defineComponent({
@@ -16,11 +15,7 @@ export default defineComponent({
     IconMapMarker,
   },
   setup() {
-    const state = reactive({
-      count: 0,
-      initialLoadDone: false,
-    });
-
+    const initialLoadDone = ref(false);
     const store = useStore();
     const route = useRoute();
     const handle = ref(route.params.name as string);
@@ -28,32 +23,28 @@ export default defineComponent({
     const user = computed(() => store.getters[AuthGetterTypes.GET_USER]);
     const followers = computed(() => store.getters[ProfileGetterTypes.GET_FOLLOWER_COUNT]);
     const following = computed(() => store.getters[ProfileGetterTypes.GET_FOLLOWING_COUNT]);
+    const name = route.params.name;
+
+    const isCurrentUser = computed(
+      () => store.getters[AuthGetterTypes.GET_USER]?.userId === store.getters[ProfileGetterTypes.GET_PROFILE]?.id
+    );
 
     onBeforeMount(async () => {
-      await store.dispatch(ProfileActionTypes.GET_PROFILE_DETAILS, handle.value);
-      state.initialLoadDone = true;
-    });
+      if (profile.value == null) {
+        await store.dispatch(ProfileActionTypes.GET_PROFILE_DETAILS, handle.value);
+        await store.dispatch(ProfileActionTypes.GET_PROFILE_FOLLOWS, user.value!.userId);
+      }
 
-    onMounted(async () => {
-      await store.dispatch(ProfileActionTypes.GET_PROFILE_FOLLOWS, user.value!.userId);
-      watch(
-        () => route.params.name,
-        async (name) => {
-          if (name) {
-            state.initialLoadDone = false;
-            await store.dispatch(ProfileActionTypes.GET_PROFILE_DETAILS, name as string);
-            await store.dispatch(ProfileActionTypes.GET_PROFILE_FOLLOWS, handle.value);
-            state.initialLoadDone = true;
-          }
-        }
-      );
+      initialLoadDone.value = true;
     });
 
     return {
-      ...toRefs(state),
       profile,
       followers,
       following,
+      isCurrentUser,
+      name,
+      initialLoadDone,
     };
   },
 });
@@ -70,11 +61,14 @@ export default defineComponent({
   </div>
   <div v-else>
     <div class="flex flex-col p-8 space-y-4 bg-gray-800 rounded-xl">
-      <div class="block">
-        <h1 class="text-2xl font-bold text-white">
-          {{ profile.username }}
-        </h1>
-        <h2 class="text-gray-300">@{{ profile.username }}</h2>
+      <div class="flex justify-between">
+        <div>
+          <h1 class="text-2xl font-bold text-white">
+            {{ profile.username }}
+          </h1>
+          <h2 class="text-gray-300">@{{ profile.username }}</h2>
+        </div>
+        <div v-if="!isCurrentUser"><button>Unfollow</button></div>
       </div>
       <p class="font-light" v-show="profile.bio !== null">
         {{ profile.bio }}
@@ -84,8 +78,18 @@ export default defineComponent({
           <IconMapMarker />
           <p>{{ profile.location }}</p>
         </div>
-        <div v-if="profile.followers">{{ followers }}</div>
-        <div v-if="profile.followings">{{ following }}</div>
+      </div>
+      <div class="flex flex-col flex-wrap w-full text-sm md:flex-row md:space-x-4" v-show="profile.followings !== null">
+        <div v-if="profile.following">
+          <router-link :to="'/u/' + name + '/following'">
+            {{ following == 1 ? following + ' Following' : following + ' Followings' }}
+          </router-link>
+        </div>
+        <div v-if="profile.followers">
+          <router-link :to="'/u/' + name + '/followers'">
+            {{ followers == 1 ? followers + ' Follower' : followers + ' Followers' }}
+          </router-link>
+        </div>
       </div>
     </div>
   </div>

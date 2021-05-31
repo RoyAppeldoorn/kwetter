@@ -39,7 +39,7 @@ export const profileActions: ActionTree<ProfileState, RootState> & ProfileAction
     await getProfileFollowByUserId(userId)
       .then((res: QueryResponse<GetFollowByUserIdResponse>) => {
         commit(ProfileMutationTypes.SET_PROFILE_FOLLOWS, res.data);
-        console.log('good!');
+        console.log(res.data);
       })
       .catch((error) => {
         console.log(error);

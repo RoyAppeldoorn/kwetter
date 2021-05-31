@@ -7,7 +7,7 @@ namespace Kwetter.Services.UserService.API.Application.Queries.GetProfileByName
 {
     public record ProfileDto
     {
-        public Guid UserId { get; set; }
+        public Guid Id { get; set; }
 
         public string Username { get; set; }
 

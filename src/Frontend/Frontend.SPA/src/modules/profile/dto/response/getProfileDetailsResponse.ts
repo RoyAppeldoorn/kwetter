@@ -1,5 +1,5 @@
 export type GetProfileDetailsResponse = {
-  id: number;
+  id: string;
   username: string;
   bio: string;
   location: string;

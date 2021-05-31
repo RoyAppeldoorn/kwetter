@@ -28,7 +28,7 @@ export default defineComponent({
 
 <template>
   <div class="flex flex-col lg:w-1/3">
-    <NavigationSidebarTab id="home" label="Home" to="/home" :selected="selectedTab === 'home'" @selectTab="selectTab">
+    <NavigationSidebarTab id="home" label="Home" to="/home">
       <template #icon>
         <IconHome :size="28" class="ml-1 mr-4" />
       </template>
@@ -45,7 +45,7 @@ export default defineComponent({
     </NavigationSidebarTab>
     <button
       class="w-12 h-12 p-3 font-semibold text-gray-100 transition-colors duration-75 rounded-full bg-red focus:outline-none lg:w-full lg:h-auto hover:bg-darkred"
-      @click="showCreateFormDialog = true"
+      to="/home"
     >
       <p class="hidden lg:block">Kweet</p>
       <IconPlus :size="24" class="inline-flex items-center justify-center lg:hidden" />

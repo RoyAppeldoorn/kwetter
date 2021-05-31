@@ -14,6 +14,6 @@ namespace Kwetter.Services.FollowService.API.Application.Queries
 
         public List<FollowDto> Followers { get; set; }
 
-        public List<FollowDto> Followings { get; set; }
+        public List<FollowDto> Following { get; set; }
     }
 }

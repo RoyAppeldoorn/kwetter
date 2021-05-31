@@ -30,7 +30,7 @@ namespace Kwetter.Services.UserService.API.Application.Queries.GetProfileByName
                 {
                     Data = new ProfileDto()
                     {
-                        UserId = user.Id,
+                        Id = user.Id,
                         Username = user.Username,
                         Bio = user.Profile.Bio,
                         PictureUrl = user.Profile.PictureUrl,
@@ -44,7 +44,7 @@ namespace Kwetter.Services.UserService.API.Application.Queries.GetProfileByName
             {
                 Data = new ProfileDto()
                 {
-                    UserId = user.Id,
+                    Id = user.Id,
                     Username = user.Username,
                 },
                 Success = true

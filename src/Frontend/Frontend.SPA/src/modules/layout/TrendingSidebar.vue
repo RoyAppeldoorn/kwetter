@@ -13,7 +13,7 @@ export default defineComponent({
 
 <template>
   <div class="relative hidden w-1/2 h-full md:block">
-    <div class="hidden w-full bg-gray-800 rounded-2xl dark:bg-darkest lg:block">
+    <div class="hidden w-full bg-gray-800 rounded-xl dark:bg-darkest lg:block">
       <div class="p-4">
         <p class="text-lg font-bold dark:text-gray-100">Who to follow</p>
       </div>

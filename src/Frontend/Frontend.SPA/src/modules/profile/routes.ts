@@ -10,6 +10,20 @@ const routes: RouteRecordRaw[] = [
       requiresAuth: true,
     },
   },
+  {
+    path: 'following',
+    component: () => import('./views/following.vue'),
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: 'followers',
+    component: () => import('./views/followers.vue'),
+    meta: {
+      requiresAuth: true,
+    },
+  },
 ];
 
 export default makeRoutesWithLayout('/u/:name', BaseLayout, routes);

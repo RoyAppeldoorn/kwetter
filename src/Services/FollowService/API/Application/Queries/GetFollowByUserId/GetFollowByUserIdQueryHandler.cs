@@ -31,7 +31,7 @@ namespace Kwetter.Services.FollowService.API.Application.Queries.GetFollowByUser
                 Id = user.Id,
                 Username = user.Username,
                 Followers = user.Followers.Select(x => new FollowDto { Id = x.FollowerId, Username = x.Follower.Username }).ToList(),
-                Followings = user.Followings.Select(x => new FollowDto { Id = x.FollowingId, Username = x.Following.Username }).ToList(),
+                Following = user.Followings.Select(x => new FollowDto { Id = x.FollowingId, Username = x.Following.Username }).ToList(),
             };
 
             return new QueryResponse<UserDto>()

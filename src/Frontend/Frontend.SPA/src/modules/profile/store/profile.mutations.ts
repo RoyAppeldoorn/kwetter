@@ -6,7 +6,7 @@ import { ProfileState } from './profile.state';
 
 export enum ProfileMutationTypes {
   SET_PROFILE_DATA = 'SET_PROFILE_DATA',
-  SET_PROFILE_FOLLOWS = 'GET_PROFILE_FOLLOWS',
+  SET_PROFILE_FOLLOWS = 'SET_PROFILE_FOLLOWS',
 }
 
 export type ProfileMutations = {
@@ -20,8 +20,10 @@ export const profileMutations: MutationTree<ProfileState> & ProfileMutations = {
   },
   [ProfileMutationTypes.SET_PROFILE_FOLLOWS](state: ProfileState, follow: GetFollowByUserIdResponse): void {
     if (state.profile) {
+      state.profile.following = follow.following;
       state.profile.followers = follow.followers;
-      state.profile.followings = follow.followings;
+      console.log(follow.followers);
+      console.log(follow.following);
     }
   },
 };

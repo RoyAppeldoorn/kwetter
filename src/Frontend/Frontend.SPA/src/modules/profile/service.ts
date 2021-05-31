@@ -17,10 +17,10 @@ export const getProfileByName = async (username: string): Promise<QueryResponse<
 
 export const getProfileFollowByUserId = async (userId: string): Promise<QueryResponse<GetFollowByUserIdResponse>> => {
   const query: GetFollowByUserIdQuery = {
-    userId: userId,
+    id: userId,
   };
 
   return await httpClient.get<GetFollowByUserIdQuery, QueryResponse<GetFollowByUserIdResponse>>(
-    `/api/follow/${query.userId}`
+    `/api/follow/${query.id}`
   );
 };

@@ -5,7 +5,7 @@ export type Profile = {
   location?: string;
   pictureUrl?: string;
   followers?: Follower[];
-  followings?: Following[];
+  following?: Following[];
 };
 
 export type Follower = {
