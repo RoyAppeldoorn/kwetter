@@ -22,6 +22,8 @@ namespace Kwetter.Services.UserService.API.Application.Queries.GetProfileByName
         public async Task<QueryResponse<ProfileDto>> Handle(GetProfileByNameQuery request, CancellationToken cancellationToken)
         {
             User user = await _userRepository.FindByUserNameAsync(request.Username, cancellationToken);
+
+            // We already know the user exists so no need to check for empty user
             if(user.Profile != default)
             {
                 return new QueryResponse<ProfileDto>()
