@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Kwetter.Services.FollowService.API.Application.Queries.GetFollowByUserId
 {
-    public record GetFollowByUserIdQuery : IRequest<QueryResponse<UserDto>>
+    public record GetFollowByUserIdQuery : IRequest<QueryResponse<FollowDto>>
     {
         public Guid UserId { get; set; }
     }

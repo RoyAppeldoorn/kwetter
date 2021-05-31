@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Kwetter.Services.FollowService.API.Application.Queries.GetFollowByUserId
 {
-    public class GetFollowByUserIdQueryHandler : IRequestHandler<GetFollowByUserIdQuery, QueryResponse<UserDto>>
+    public class GetFollowByUserIdQueryHandler : IRequestHandler<GetFollowByUserIdQuery, QueryResponse<FollowDto>>
     {
         private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
@@ -22,21 +22,21 @@ namespace Kwetter.Services.FollowService.API.Application.Queries.GetFollowByUser
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         }
 
-        public async Task<QueryResponse<UserDto>> Handle(GetFollowByUserIdQuery request, CancellationToken cancellationToken)
+        public async Task<QueryResponse<FollowDto>> Handle(GetFollowByUserIdQuery request, CancellationToken cancellationToken)
         {
             User user = await _userRepository.FindByIdAsync(request.UserId, cancellationToken);
 
-            UserDto userDto = new()
+            FollowDto followDto = new()
             {
                 Id = user.Id,
                 Username = user.Username,
-                Followers = user.Followers.Select(x => new FollowDto { Id = x.FollowerId, Username = x.Follower.Username }).ToList(),
-                Following = user.Followings.Select(x => new FollowDto { Id = x.FollowingId, Username = x.Following.Username }).ToList(),
+                Followers = user.Followers.Select(x => new FollowerDto { Id = x.FollowerId, Username = x.Follower.Username }).ToList(),
+                Following = user.Followings.Select(x => new FollowerDto { Id = x.FollowingId, Username = x.Following.Username }).ToList(),
             };
 
-            return new QueryResponse<UserDto>()
+            return new QueryResponse<FollowDto>()
             {
-                Data = userDto,
+                Data = followDto,
                 Success = true
             };
         }

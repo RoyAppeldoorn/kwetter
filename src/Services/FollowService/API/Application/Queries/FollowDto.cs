@@ -12,5 +12,9 @@ namespace Kwetter.Services.FollowService.API.Application.Queries
         public Guid Id { get; set; }
 
         public string Username { get; set; }
+
+        public List<FollowerDto> Followers { get; set; }
+
+        public List<FollowerDto> Following { get; set; }
     }
 }

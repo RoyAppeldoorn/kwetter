@@ -5,20 +5,12 @@ using Kwetter.Services.FollowService.API.Infrastructure;
 using Kwetter.Services.FollowService.API.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace Kwetter.Services.FollowService.API
 {
@@ -45,10 +37,7 @@ namespace Kwetter.Services.FollowService.API
             });
 
             // TODO: Current implemenation is a dirty workaround. Fix self referencing loop
-            services.AddControllers().AddNewtonsoftJson(x =>
-            {
-                x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-            });
+            services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Kwetter.Services.FollowService.API", Version = "v1" });

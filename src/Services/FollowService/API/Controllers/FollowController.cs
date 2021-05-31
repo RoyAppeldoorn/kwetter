@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Kwetter.Services.FollowService.API.Controllers
@@ -30,9 +29,9 @@ namespace Kwetter.Services.FollowService.API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CreateAsync(CreateFollowCommand command)
         {
-            //HttpContext.Request.Headers.TryGetValue("UserId", out var userId);
-            //if (command.FollowerId != Guid.Parse(userId))
-            //    return UnauthorizedCommand();
+            HttpContext.Request.Headers.TryGetValue("UserId", out var userId);
+            if (command.FollowerId != Guid.Parse(userId))
+                return UnauthorizedCommand();
 
             CommandResult commandResult = await _mediator.Send(command);
             return commandResult.Success
@@ -67,7 +66,7 @@ namespace Kwetter.Services.FollowService.API.Controllers
                 UserId = userId
             };
 
-            QueryResponse<UserDto> queryResponse = await _mediator.Send(getFollowByUserIdQuery);
+            QueryResponse<FollowDto> queryResponse = await _mediator.Send(getFollowByUserIdQuery);
             return queryResponse.Success
                 ? new OkObjectResult(queryResponse)
                 : new BadRequestObjectResult(queryResponse);

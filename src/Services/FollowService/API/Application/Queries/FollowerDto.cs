@@ -6,14 +6,10 @@ using System.Threading.Tasks;
 
 namespace Kwetter.Services.FollowService.API.Application.Queries
 {
-    public record UserDto
+    public record FollowerDto
     {
         public Guid Id { get; set; }
 
         public string Username { get; set; }
-
-        public List<FollowDto> Followers { get; set; }
-
-        public List<FollowDto> Following { get; set; }
     }
 }
