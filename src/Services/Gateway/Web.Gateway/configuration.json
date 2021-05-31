@@ -20,7 +20,7 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/api/follow",
+      "DownstreamPathTemplate": "/api/follow/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -28,8 +28,8 @@
           "Port": 7101
         }
       ],
-      "UpstreamPathTemplate": "/api/follow",
-      "UpstreamHttpMethod": [ "Post", "Delete" ],
+      "UpstreamPathTemplate": "/api/follow/{everything}",
+      "UpstreamHttpMethod": [ "Post", "Delete", "Get" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "firebase",
         "AllowedScopes": []
