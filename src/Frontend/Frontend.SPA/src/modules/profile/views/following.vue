@@ -7,12 +7,14 @@ import { ProfileGetterTypes } from '../store/profile.getters';
 import LoadingSpinner from '@/components/LoadingSpinner.vue';
 import { AuthGetterTypes } from '@/modules/auth/store/auth.getters';
 import Return from '@/components/Return.vue';
+import FollowCard from '../components/FollowCard.vue';
 
 export default defineComponent({
   name: 'Followers',
   components: {
     LoadingSpinner,
     Return,
+    FollowCard,
   },
   setup() {
     const initialLoadDone = ref(false);
@@ -26,7 +28,8 @@ export default defineComponent({
     onBeforeMount(async () => {
       if (profile.value == null) {
         await store.dispatch(ProfileActionTypes.GET_PROFILE_DETAILS, handle.value);
-        await store.dispatch(ProfileActionTypes.GET_PROFILE_FOLLOWS, user.value!.userId);
+        let id = store.getters[ProfileGetterTypes.GET_PROFILE]?.id;
+        if (id) await store.dispatch(ProfileActionTypes.GET_PROFILE_FOLLOWS, id);
       }
 
       initialLoadDone.value = true;
@@ -52,8 +55,14 @@ export default defineComponent({
   </div>
   <div v-else>
     <div class="flex flex-col p-8 space-y-4 bg-gray-800 rounded-xl">
-      <Return />
-      {{ profile.following }}
+      <div class="flex mb-8">
+        <Return class="mr-6" :to="'/u/' + profile.username" />
+        <span class="text-xl font-bold">Following</span>
+      </div>
+
+      <div v-for="follow in following" :key="follow.id">
+        <FollowCard :follower="follow" />
+      </div>
     </div>
   </div>
 </template>

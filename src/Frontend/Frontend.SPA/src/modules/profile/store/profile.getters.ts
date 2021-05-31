@@ -9,6 +9,7 @@ export enum ProfileGetterTypes {
   GET_FOLLOWERS = 'GET_FOLLOWERS',
   GET_FOLLOWING_COUNT = 'GET_FOLLOWING_COUNT',
   GET_FOLLOWING = 'GET_FOLLOWING',
+  IS_FOLLOWING = 'IS_FOLLOWING',
 }
 
 export type ProfileGetters = {
@@ -17,6 +18,7 @@ export type ProfileGetters = {
   [ProfileGetterTypes.GET_FOLLOWERS](state: ProfileState): Follower[] | undefined;
   [ProfileGetterTypes.GET_FOLLOWING_COUNT](state: ProfileState): number | undefined;
   [ProfileGetterTypes.GET_FOLLOWING](state: ProfileState): Following[] | undefined;
+  [ProfileGetterTypes.IS_FOLLOWING](state: ProfileState): (id: string) => boolean | undefined;
 };
 
 export const profileGetters: GetterTree<ProfileState, RootState> & ProfileGetters = {
@@ -34,5 +36,8 @@ export const profileGetters: GetterTree<ProfileState, RootState> & ProfileGetter
   },
   [ProfileGetterTypes.GET_FOLLOWING](state: ProfileState): Following[] | undefined {
     return state.profile?.following;
+  },
+  [ProfileGetterTypes.IS_FOLLOWING]: (state: ProfileState) => (id: string): boolean | undefined => {
+    return state.profile?.following?.some((x) => x.id === id);
   },
 };

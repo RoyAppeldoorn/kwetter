@@ -22,8 +22,6 @@ export const profileMutations: MutationTree<ProfileState> & ProfileMutations = {
     if (state.profile) {
       state.profile.following = follow.following;
       state.profile.followers = follow.followers;
-      console.log(follow.followers);
-      console.log(follow.following);
     }
   },
 };

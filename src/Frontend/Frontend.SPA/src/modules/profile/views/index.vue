@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, onBeforeMount, ref, computed } from 'vue';
+import { defineComponent, onBeforeMount, ref, computed, onMounted, watch } from 'vue';
 import { useStore } from '@/store';
 import { useRoute } from 'vue-router';
 import { ProfileActionTypes } from '../store/profile.actions';
@@ -7,12 +7,14 @@ import { ProfileGetterTypes } from '../store/profile.getters';
 import LoadingSpinner from '@/components/LoadingSpinner.vue';
 import IconMapMarker from '@/icons/IconMapMarker.vue';
 import { AuthGetterTypes } from '@/modules/auth/store/auth.getters';
+import FollowButton from '../components/FollowButton.vue';
 
 export default defineComponent({
   name: 'Profile',
   components: {
     LoadingSpinner,
     IconMapMarker,
+    FollowButton,
   },
   setup() {
     const initialLoadDone = ref(false);
@@ -23,6 +25,7 @@ export default defineComponent({
     const user = computed(() => store.getters[AuthGetterTypes.GET_USER]);
     const followers = computed(() => store.getters[ProfileGetterTypes.GET_FOLLOWER_COUNT]);
     const following = computed(() => store.getters[ProfileGetterTypes.GET_FOLLOWING_COUNT]);
+    const isFollowing = computed(() => store.getters[ProfileGetterTypes.IS_FOLLOWING](user.value!.userId));
     const name = route.params.name;
 
     const isCurrentUser = computed(
@@ -32,7 +35,8 @@ export default defineComponent({
     onBeforeMount(async () => {
       if (profile.value == null) {
         await store.dispatch(ProfileActionTypes.GET_PROFILE_DETAILS, handle.value);
-        await store.dispatch(ProfileActionTypes.GET_PROFILE_FOLLOWS, user.value!.userId);
+        let id = store.getters[ProfileGetterTypes.GET_PROFILE]?.id;
+        if (id) await store.dispatch(ProfileActionTypes.GET_PROFILE_FOLLOWS, id);
       }
 
       initialLoadDone.value = true;
@@ -45,6 +49,7 @@ export default defineComponent({
       isCurrentUser,
       name,
       initialLoadDone,
+      isFollowing,
     };
   },
 });
@@ -68,7 +73,7 @@ export default defineComponent({
           </h1>
           <h2 class="text-gray-300">@{{ profile.username }}</h2>
         </div>
-        <div v-if="!isCurrentUser"><button>Unfollow</button></div>
+        <FollowButton />
       </div>
       <p class="font-light" v-show="profile.bio !== null">
         {{ profile.bio }}

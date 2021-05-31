@@ -7,12 +7,14 @@ import { ProfileGetterTypes } from '../store/profile.getters';
 import LoadingSpinner from '@/components/LoadingSpinner.vue';
 import { AuthGetterTypes } from '@/modules/auth/store/auth.getters';
 import Return from '@/components/Return.vue';
+import FollowCard from '../components/FollowCard.vue';
 
 export default defineComponent({
   name: 'Followers',
   components: {
     LoadingSpinner,
     Return,
+    FollowCard,
   },
   setup() {
     const initialLoadDone = ref(false);
@@ -20,13 +22,13 @@ export default defineComponent({
     const route = useRoute();
     const handle = ref(route.params.name as string);
     const profile = computed(() => store.getters[ProfileGetterTypes.GET_PROFILE]);
-    const user = computed(() => store.getters[AuthGetterTypes.GET_USER]);
     const followers = computed(() => store.getters[ProfileGetterTypes.GET_FOLLOWERS]);
 
     onBeforeMount(async () => {
       if (profile.value == null) {
         await store.dispatch(ProfileActionTypes.GET_PROFILE_DETAILS, handle.value);
-        await store.dispatch(ProfileActionTypes.GET_PROFILE_FOLLOWS, user.value!.userId);
+        let id = store.getters[ProfileGetterTypes.GET_PROFILE]?.id;
+        if (id) await store.dispatch(ProfileActionTypes.GET_PROFILE_FOLLOWS, id);
       }
       initialLoadDone.value = true;
     });
@@ -51,8 +53,14 @@ export default defineComponent({
   </div>
   <div v-else>
     <div class="flex flex-col p-8 space-y-4 bg-gray-800 rounded-xl">
-      <Return />
-      {{ followers }}
+      <div class="flex mb-8">
+        <Return class="mr-6" :to="'/u/' + profile.username" />
+        <span class="text-xl font-bold">Followers</span>
+      </div>
+
+      <div v-for="follower in followers" :key="follower.id">
+        <FollowCard :follower="follower" />
+      </div>
     </div>
   </div>
 </template>

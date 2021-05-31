@@ -29,7 +29,6 @@ export const profileActions: ActionTree<ProfileState, RootState> & ProfileAction
     await getProfileByName(handle)
       .then((res: QueryResponse<GetProfileDetailsResponse>) => {
         commit(ProfileMutationTypes.SET_PROFILE_DATA, res.data);
-        console.log('good!');
       })
       .catch((error) => {
         console.log(error);
@@ -39,7 +38,6 @@ export const profileActions: ActionTree<ProfileState, RootState> & ProfileAction
     await getProfileFollowByUserId(userId)
       .then((res: QueryResponse<GetFollowByUserIdResponse>) => {
         commit(ProfileMutationTypes.SET_PROFILE_FOLLOWS, res.data);
-        console.log(res.data);
       })
       .catch((error) => {
         console.log(error);
