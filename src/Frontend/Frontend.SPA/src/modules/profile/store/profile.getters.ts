@@ -38,6 +38,6 @@ export const profileGetters: GetterTree<ProfileState, RootState> & ProfileGetter
     return state.profile?.following;
   },
   [ProfileGetterTypes.IS_FOLLOWING]: (state: ProfileState) => (id: string): boolean | undefined => {
-    return state.profile?.following?.some((x) => x.id === id);
+    return state.profile?.followers?.some((x) => x.id === id);
   },
 };

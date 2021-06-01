@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, onBeforeMount, ref, computed, onMounted, watch } from 'vue';
+import { defineComponent, onBeforeMount, ref, computed, onMounted, watch, onUnmounted } from 'vue';
 import { useStore } from '@/store';
 import { useRoute } from 'vue-router';
 import { ProfileActionTypes } from '../store/profile.actions';
@@ -26,28 +26,37 @@ export default defineComponent({
     const followers = computed(() => store.getters[ProfileGetterTypes.GET_FOLLOWER_COUNT]);
     const following = computed(() => store.getters[ProfileGetterTypes.GET_FOLLOWING_COUNT]);
     const isFollowing = computed(() => store.getters[ProfileGetterTypes.IS_FOLLOWING](user.value!.userId));
-    const name = route.params.name;
 
-    const isCurrentUser = computed(
-      () => store.getters[AuthGetterTypes.GET_USER]?.userId === store.getters[ProfileGetterTypes.GET_PROFILE]?.id
-    );
+    const isCurrentUser = computed(() => store.getters[AuthGetterTypes.GET_USER]?.userId === store.getters[ProfileGetterTypes.GET_PROFILE]?.id);
 
     onBeforeMount(async () => {
-      if (profile.value == null) {
-        await store.dispatch(ProfileActionTypes.GET_PROFILE_DETAILS, handle.value);
-        let id = store.getters[ProfileGetterTypes.GET_PROFILE]?.id;
-        if (id) await store.dispatch(ProfileActionTypes.GET_PROFILE_FOLLOWS, id);
-      }
+      await store.dispatch(ProfileActionTypes.GET_PROFILE_DETAILS, handle.value);
+      let id = store.getters[ProfileGetterTypes.GET_PROFILE]?.id;
+      if (id) await store.dispatch(ProfileActionTypes.GET_PROFILE_FOLLOWS, id);
 
       initialLoadDone.value = true;
     });
 
+    onMounted(() => {
+      watch(
+        () => route.params.name,
+        async (name) => {
+          if (name) {
+            initialLoadDone.value = false;
+            await store.dispatch(ProfileActionTypes.GET_PROFILE_DETAILS, handle.value);
+            let id = store.getters[ProfileGetterTypes.GET_PROFILE]?.id;
+            if (id) await store.dispatch(ProfileActionTypes.GET_PROFILE_FOLLOWS, id);
+            initialLoadDone.value = true;
+          }
+        }
+      );
+    });
+    0;
     return {
       profile,
       followers,
       following,
       isCurrentUser,
-      name,
       initialLoadDone,
       isFollowing,
     };
@@ -86,12 +95,12 @@ export default defineComponent({
       </div>
       <div class="flex flex-col flex-wrap w-full text-sm md:flex-row md:space-x-4" v-show="profile.followings !== null">
         <div v-if="profile.following">
-          <router-link :to="'/u/' + name + '/following'">
+          <router-link :to="'/u/' + profile.username + '/following'">
             {{ following == 1 ? following + ' Following' : following + ' Followings' }}
           </router-link>
         </div>
         <div v-if="profile.followers">
-          <router-link :to="'/u/' + name + '/followers'">
+          <router-link :to="'/u/' + profile.username + '/followers'">
             {{ followers == 1 ? followers + ' Follower' : followers + ' Followers' }}
           </router-link>
         </div>

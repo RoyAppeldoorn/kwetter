@@ -64,14 +64,9 @@ export default defineComponent({
       </div>
       <div class="flex items-center justify-end space-x-4">
         <span class="h-full pr-4 text-xs border-r border-gray-600">{{ remainingKweetCharacters }}</span>
-        <button
-          class="flex-shrink-0 px-4 py-2 text-sm font-bold text-white rounded bg-red hover:bg-darkred"
-          type="submit"
-        >
-          Kweet
-        </button>
+        <button class="flex-shrink-0 px-4 py-2 text-sm font-bold text-white rounded bg-red hover:bg-darkred" type="submit">Kweet</button>
       </div>
     </form>
-    <div>{{ user }}</div>
+    <!-- <div>{{ user }}</div> -->
   </div>
 </template>

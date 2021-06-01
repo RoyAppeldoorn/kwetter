@@ -42,8 +42,8 @@ class HttpClient {
     });
   }
 
-  delete<T = any, R = AxiosResponse<T>>(path: string, config?: AxiosRequestConfig): Promise<R> {
-    return this.httpClient.delete(path, config);
+  delete<T = any, R = AxiosResponse<T>>(path: string, body: T, config?: AxiosRequestConfig): Promise<R> {
+    return this.httpClient.delete(path, { data: body });
   }
 
   private initializeRequestInterceptor = async () => {

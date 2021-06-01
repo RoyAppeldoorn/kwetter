@@ -22,6 +22,7 @@
 import { AuthGetterTypes } from '@/modules/auth/store/auth.getters';
 import { useStore } from '@/store';
 import { computed, defineComponent } from 'vue';
+import { ProfileActionTypes } from '../store/profile.actions';
 import { ProfileGetterTypes } from '../store/profile.getters';
 
 export default defineComponent({
@@ -29,19 +30,21 @@ export default defineComponent({
   setup() {
     const store = useStore();
 
+    const profile = computed(() => store.getters[ProfileGetterTypes.GET_PROFILE]);
     const user = computed(() => store.getters[AuthGetterTypes.GET_USER]);
     const isFollowing = computed(() => store.getters[ProfileGetterTypes.IS_FOLLOWING](user.value!.userId));
     const isCurrentUser = computed(() => user.value?.userId === store.getters[ProfileGetterTypes.GET_PROFILE]?.id);
 
     async function followUserOrUnfollowUser() {
       if (isFollowing.value) {
-        console.log('unfollow');
+        await store.dispatch(ProfileActionTypes.UNFOLLOW_USER, { followingId: profile.value!.id, followerId: user.value!.userId });
         return;
       }
+      await store.dispatch(ProfileActionTypes.FOLLOW_USER, { followingId: profile.value!.id, followerId: user.value!.userId, name: profile.value!.username });
       console.log('follow');
     }
 
-    return { followUserOrUnfollowUser, isCurrentUser, isFollowing };
+    return { followUserOrUnfollowUser, isCurrentUser, isFollowing, profile };
   },
 });
 </script>
