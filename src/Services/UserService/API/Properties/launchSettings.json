@@ -16,7 +16,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "API": {
+    "UserService": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": true,
