@@ -46,11 +46,14 @@ namespace Kwetter.Services.AuthorizationService.API.Application.Commands.SetCust
                 };
                 await _authorizationService.SetUserClaimsAsync(openId, claims, cancellationToken);
                 identity = _identityRepository.Create(newIdentity);
-                await _identityRepository.UnitOfWork.SaveEntitiesAsync();
+                bool success = await _identityRepository.UnitOfWork.SaveEntitiesAsync();
 
-                // publish domain event to rabbitmq
-                IdentityCreatedDomainEvent identityCreatedDomainEvent = new(userId: newIdentity.Id, userName: newIdentity.UserName);
-                await _messagePublisher.PublishMessageAsync("IdentityCreated", identityCreatedDomainEvent);
+                if(success)
+                {
+                    // publish domain event to rabbitmq
+                    IdentityCreatedDomainEvent identityCreatedDomainEvent = new(userId: newIdentity.Id, userName: newIdentity.UserName);
+                    await _messagePublisher.PublishMessageAsync("IdentityCreated", identityCreatedDomainEvent);
+                }
             }
 
             commandResult.Success = identity != default;
