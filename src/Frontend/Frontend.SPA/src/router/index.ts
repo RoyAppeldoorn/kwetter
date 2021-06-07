@@ -1,21 +1,17 @@
-// import isAuthenticated from '@/guards/isAuthenticated';
 import isAuthenticated from '@/guards/isAuthenticated';
 import requiresAuth from '@/guards/requiresAuth';
 import AuthRoutes from '@/modules/auth/routes';
 import { rootStore } from '@/store';
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import NotFound from '../views/NotFound.vue';
 import homeRoutes from '@/modules/home/routes';
 import profileRoutes from '@/modules/profile/routes';
+import catchAll from '@/modules/layout/routes';
 
 const routes: RouteRecordRaw[] = [
-  {
-    path: '/:catchAll(.*)',
-    component: NotFound,
-  },
   ...AuthRoutes,
   homeRoutes,
   profileRoutes,
+  catchAll,
 ];
 
 const router = createRouter({

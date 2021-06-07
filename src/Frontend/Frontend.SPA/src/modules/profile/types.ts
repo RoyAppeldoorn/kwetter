@@ -6,6 +6,7 @@ export type Profile = {
   pictureUrl?: string;
   followers?: Follower[];
   following?: Following[];
+  isFollowing?: boolean;
 };
 
 export type Follower = {

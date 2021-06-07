@@ -3,7 +3,7 @@
     <div class="flex items-center">
       <div class="w-12 h-12 mr-6 bg-white rounded-full" />
       <div>
-        <p class="leading-none text-white">{{ follower.username }}</p>
+        <router-link :to="'/u/' + follower.username" class="leading-none text-white">{{ follower.username }}</router-link>
         <p class="text-gray-600">@{{ follower.username }}</p>
       </div>
     </div>
