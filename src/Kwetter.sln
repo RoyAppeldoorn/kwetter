@@ -35,7 +35,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kwetter.Services.Common.Tes
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FollowService", "FollowService", "{58C1A950-43D0-4600-AC69-EEC41A72B139}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kwetter.Services.FollowService.API", "Services\FollowService\API\Kwetter.Services.FollowService.API.csproj", "{C43C9BBA-E673-4A13-998C-6EF68533C262}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kwetter.Services.FollowService.API", "Services\FollowService\API\Kwetter.Services.FollowService.API.csproj", "{C43C9BBA-E673-4A13-998C-6EF68533C262}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TimelineService", "TimelineService", "{3E586316-2E1B-49E9-9739-F81B7C2F1E5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kwetter.Services.TimelineService.API", "Services\TimelineService\API\Kwetter.Services.TimelineService.API.csproj", "{A346A5F4-6928-49AB-B00F-555A972B93C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,6 +87,10 @@ Global
 		{C43C9BBA-E673-4A13-998C-6EF68533C262}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C43C9BBA-E673-4A13-998C-6EF68533C262}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C43C9BBA-E673-4A13-998C-6EF68533C262}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A346A5F4-6928-49AB-B00F-555A972B93C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A346A5F4-6928-49AB-B00F-555A972B93C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A346A5F4-6928-49AB-B00F-555A972B93C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A346A5F4-6928-49AB-B00F-555A972B93C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -104,6 +112,8 @@ Global
 		{387BEB4B-17DE-44AB-9780-26896177A889} = {DC613B38-5652-410F-8F30-1A43D31B3967}
 		{58C1A950-43D0-4600-AC69-EEC41A72B139} = {2D0B0796-1775-4CDA-A86D-604AD3E0827A}
 		{C43C9BBA-E673-4A13-998C-6EF68533C262} = {58C1A950-43D0-4600-AC69-EEC41A72B139}
+		{3E586316-2E1B-49E9-9739-F81B7C2F1E5B} = {2D0B0796-1775-4CDA-A86D-604AD3E0827A}
+		{A346A5F4-6928-49AB-B00F-555A972B93C1} = {3E586316-2E1B-49E9-9739-F81B7C2F1E5B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {65436DE8-333B-40BC-A4A7-706AA4596FB5}
