@@ -2,8 +2,6 @@
 using Kwetter.Services.FollowService.API.Domain;
 using Kwetter.Services.FollowService.API.Infrastructure.Repositories;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
