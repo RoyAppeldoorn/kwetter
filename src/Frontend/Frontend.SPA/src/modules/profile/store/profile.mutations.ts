@@ -1,7 +1,7 @@
 import { MutationTree } from 'vuex';
 import { GetFollowByUserIdResponse } from '../dto/response/getFollowByUserIdResponse';
 import { GetProfileDetailsResponse } from '../dto/response/getProfileDetailsResponse';
-import { Follower, Profile } from '../types';
+import { Follower } from '../types';
 import { ProfileState } from './profile.state';
 
 export enum ProfileMutationTypes {
@@ -42,7 +42,7 @@ export const profileMutations: MutationTree<ProfileState> & ProfileMutations = {
   },
   [ProfileMutationTypes.REMOVE_FOLLOWER](state: ProfileState, id: string): void {
     if (state.profile) {
-      state.profile.followers! = state.profile.followers!.filter((e) => e.id !==id);
+      state.profile.followers! = state.profile.followers!.filter((e) => e.id !== id);
     }
   },
 };

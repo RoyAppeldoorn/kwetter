@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, onBeforeMount, ref, computed, onMounted, watch, onUnmounted } from 'vue';
+import { defineComponent, onBeforeMount, ref, computed, onMounted, watch } from 'vue';
 import { useStore } from '@/store';
 import { useRoute } from 'vue-router';
 import { ProfileActionTypes } from '../store/profile.actions';
@@ -27,7 +27,9 @@ export default defineComponent({
     const following = computed(() => store.getters[ProfileGetterTypes.GET_FOLLOWING_COUNT]);
     const isFollowing = computed(() => store.getters[ProfileGetterTypes.IS_FOLLOWING](user.value!.userId));
 
-    const isCurrentUser = computed(() => store.getters[AuthGetterTypes.GET_USER]?.userId === store.getters[ProfileGetterTypes.GET_PROFILE]?.id);
+    const isCurrentUser = computed(
+      () => store.getters[AuthGetterTypes.GET_USER]?.userId === store.getters[ProfileGetterTypes.GET_PROFILE]?.id
+    );
 
     onBeforeMount(async () => {
       await store.dispatch(ProfileActionTypes.GET_PROFILE_DETAILS, handle.value);

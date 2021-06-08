@@ -26,8 +26,14 @@ type AugmentedProfileActionContext = {
 export interface ProfileActions {
   [ProfileActionTypes.GET_PROFILE_DETAILS]({ commit }: AugmentedProfileActionContext, handle: string): void;
   [ProfileActionTypes.GET_PROFILE_FOLLOWS]({ commit }: AugmentedProfileActionContext, userId: string): void;
-  [ProfileActionTypes.FOLLOW_USER]({ commit }: AugmentedProfileActionContext, payload: { followingId: string, followerId: string, name: string }): void;
-  [ProfileActionTypes.UNFOLLOW_USER]({ commit }: AugmentedProfileActionContext, payload: { followingId: string, followerId: string }): void;
+  [ProfileActionTypes.FOLLOW_USER](
+    { commit }: AugmentedProfileActionContext,
+    payload: { followingId: string; followerId: string; name: string }
+  ): void;
+  [ProfileActionTypes.UNFOLLOW_USER](
+    { commit }: AugmentedProfileActionContext,
+    payload: { followingId: string; followerId: string }
+  ): void;
 }
 
 export const profileActions: ActionTree<ProfileState, RootState> & ProfileActions = {
@@ -49,14 +55,17 @@ export const profileActions: ActionTree<ProfileState, RootState> & ProfileAction
         console.log(error);
       });
   },
-  async [ProfileActionTypes.FOLLOW_USER]({ commit }: AugmentedProfileActionContext, payload: { followingId: string, followerId: string, name: string }) {
+  async [ProfileActionTypes.FOLLOW_USER](
+    { commit }: AugmentedProfileActionContext,
+    payload: { followingId: string; followerId: string; name: string }
+  ) {
     await createFollow(payload.followingId, payload.followerId)
       .then((res: CommandResult) => {
         commit(ProfileMutationTypes.SET_IS_FOLLOWING, res.success);
 
         const follower: Follower = {
           id: payload.followerId,
-          username: payload.name
+          username: payload.name,
         };
 
         commit(ProfileMutationTypes.ADD_FOLLOWER, follower);
@@ -65,9 +74,12 @@ export const profileActions: ActionTree<ProfileState, RootState> & ProfileAction
         console.log(error);
       });
   },
-  async [ProfileActionTypes.UNFOLLOW_USER]({ commit }: AugmentedProfileActionContext, payload: { followingId: string, followerId: string }) {
+  async [ProfileActionTypes.UNFOLLOW_USER](
+    { commit }: AugmentedProfileActionContext,
+    payload: { followingId: string; followerId: string }
+  ) {
     await deleteFollow(payload.followingId, payload.followerId)
-      .then((res: CommandResult) => {
+      .then(() => {
         commit(ProfileMutationTypes.REMOVE_FOLLOWER, payload.followerId);
       })
       .catch((error) => {

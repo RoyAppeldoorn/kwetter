@@ -5,7 +5,6 @@ import { useRoute } from 'vue-router';
 import { ProfileActionTypes } from '../store/profile.actions';
 import { ProfileGetterTypes } from '../store/profile.getters';
 import LoadingSpinner from '@/components/LoadingSpinner.vue';
-import { AuthGetterTypes } from '@/modules/auth/store/auth.getters';
 import Return from '@/components/Return.vue';
 import FollowCard from '../components/FollowCard.vue';
 
@@ -22,7 +21,6 @@ export default defineComponent({
     const route = useRoute();
     const handle = ref(route.params.name as string);
     const profile = computed(() => store.getters[ProfileGetterTypes.GET_PROFILE]);
-    const user = computed(() => store.getters[AuthGetterTypes.GET_USER]);
     const following = computed(() => store.getters[ProfileGetterTypes.GET_FOLLOWING]);
 
     onBeforeMount(async () => {

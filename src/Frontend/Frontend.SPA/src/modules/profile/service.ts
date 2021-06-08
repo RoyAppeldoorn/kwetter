@@ -6,7 +6,6 @@ import GetFollowByUserIdQuery from './dto/getFollowByUserIdQuery';
 import GetProfileDetailsQuery from './dto/getProfileDetailsQuery';
 import { GetFollowByUserIdResponse } from './dto/response/getFollowByUserIdResponse';
 import { GetProfileDetailsResponse } from './dto/response/getProfileDetailsResponse';
-import UnFollow from './dto/deleteFollow';
 import DeleteFollow from './dto/deleteFollow';
 
 export const getProfileByName = async (username: string): Promise<QueryResponse<GetProfileDetailsResponse>> => {

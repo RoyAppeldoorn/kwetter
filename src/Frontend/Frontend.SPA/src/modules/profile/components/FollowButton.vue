@@ -37,10 +37,17 @@ export default defineComponent({
 
     async function followUserOrUnfollowUser() {
       if (isFollowing.value) {
-        await store.dispatch(ProfileActionTypes.UNFOLLOW_USER, { followingId: profile.value!.id, followerId: user.value!.userId });
+        await store.dispatch(ProfileActionTypes.UNFOLLOW_USER, {
+          followingId: profile.value!.id,
+          followerId: user.value!.userId,
+        });
         return;
       }
-      await store.dispatch(ProfileActionTypes.FOLLOW_USER, { followingId: profile.value!.id, followerId: user.value!.userId, name: profile.value!.username });
+      await store.dispatch(ProfileActionTypes.FOLLOW_USER, {
+        followingId: profile.value!.id,
+        followerId: user.value!.userId,
+        name: profile.value!.username,
+      });
       console.log('follow');
     }
 

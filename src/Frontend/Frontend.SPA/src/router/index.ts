@@ -7,12 +7,7 @@ import homeRoutes from '@/modules/home/routes';
 import profileRoutes from '@/modules/profile/routes';
 import catchAll from '@/modules/layout/routes';
 
-const routes: RouteRecordRaw[] = [
-  ...AuthRoutes,
-  homeRoutes,
-  profileRoutes,
-  catchAll,
-];
+const routes: RouteRecordRaw[] = [...AuthRoutes, homeRoutes, profileRoutes, catchAll];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

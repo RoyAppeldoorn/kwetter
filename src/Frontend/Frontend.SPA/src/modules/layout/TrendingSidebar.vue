@@ -17,7 +17,11 @@ export default defineComponent({
       <div class="p-4">
         <p class="text-lg font-bold">Who to follow</p>
       </div>
-      <button v-for="trend in trends" :key="trend.name" class="flex w-full px-3 py-4 border-t hover:bg-gray-800 border-gray-700 focus:outline-none">
+      <button
+        v-for="trend in trends"
+        :key="trend.name"
+        class="flex w-full px-3 py-4 border-t border-gray-700 hover:bg-gray-800 focus:outline-none"
+      >
         <div>
           <p class="text-sm leading-tight dark:text-gray-100">
             {{ trend.name }}
@@ -25,7 +29,11 @@ export default defineComponent({
         </div>
       </button>
 
-      <button class="w-full p-4 text-left font-bold border-t bg-gray-700 hover:bg-red border-gray-700 text-white rounded-b-2xl focus:outline-none">Show More</button>
+      <button
+        class="w-full p-4 font-bold text-left text-white bg-gray-700 border-t border-gray-700 hover:bg-red rounded-b-2xl focus:outline-none"
+      >
+        Show More
+      </button>
     </div>
   </div>
 </template>
