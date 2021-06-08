@@ -1,19 +1,21 @@
 using Kwetter.Services.Common.API;
+using Kwetter.Services.Common.Infrastructure;
+using Kwetter.Services.TimelineService.API.Application.IntegrationEventHandlers.KweetCreated;
+using Kwetter.Services.TimelineService.API.Application.IntegrationEventHandlers.KweetLiked;
+using Kwetter.Services.TimelineService.API.Application.IntegrationEventHandlers.KweetUnliked;
+using Kwetter.Services.TimelineService.API.Application.IntegrationEventHandlers.UserCreated;
+using Kwetter.Services.TimelineService.API.Application.IntegrationEventHandlers.UserFollowed;
+using Kwetter.Services.TimelineService.API.Application.IntegrationEventHandlers.UserUnfollowed;
+using Kwetter.Services.TimelineService.API.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Neo4jClient;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace Kwetter.Services.TimelineService.API
 {
@@ -33,7 +35,17 @@ namespace Kwetter.Services.TimelineService.API
         {
             IGraphClient graphClient = InitNeo4jClient(Config.GetSection("NEO4J"));
             services.AddSingleton(graphClient);
+            services.AddTransient<ITimelineGraphRepository, TimelineGraphRepository>();
             services.AddDefaultApplicationServices(Assembly.GetAssembly(typeof(Startup)));
+
+            services.AddMessagePublishing("TimelineService", builder => {
+                builder.WithHandler<KweetCreatedIntegrationEventHandler>("KweetCreated");
+                builder.WithHandler<KweetLikedIntegrationEventHandler>("KweetLiked");
+                builder.WithHandler<KweetUnlikedIntegrationEventHandler>("KweetUnliked");
+                builder.WithHandler<UserCreatedIntegrationEventHandler>("UserCreated");
+                builder.WithHandler<UserFollowedIntegrationEventHandler>("UserFollowed");
+                builder.WithHandler<UserUnfollowedIntegrationEventHandler>("UserUnfollowed");
+            });
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -64,7 +76,7 @@ namespace Kwetter.Services.TimelineService.API
             });
         }
 
-        private static IGraphClient InitNeo4jClient(IConfiguration config)
+        private static IGraphClient InitNeo4jClient(IConfigurationSection config)
         {
             IGraphClient client = new GraphClient(new Uri(config["URL"]), config["USERNAME"], config["PASSWORD"]);
             client.ConnectAsync().Wait();

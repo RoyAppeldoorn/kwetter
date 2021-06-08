@@ -1,13 +1,12 @@
 ﻿using Kwetter.Services.Common.Infrastructure.Messaging;
-using Kwetter.Services.TimelineService.API.Domain;
 using Kwetter.Services.TimelineService.API.Infrastructure;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Kwetter.Services.TimelineService.API.Application.IntegrationEventHandlers.UserFollowed
+namespace Kwetter.Services.TimelineService.API.Application.IntegrationEventHandlers.UserUnfollowed
 {
-    public class UserUnfollowedIntegrationEventHandler : IMessageHandler<UserFollowedIntegrationEvent>
+    public class UserUnfollowedIntegrationEventHandler : IMessageHandler<UserUnfollowedIntegrationEvent>
     {
         private readonly ITimelineGraphRepository _timelineGraphRepository;
 
@@ -16,7 +15,7 @@ namespace Kwetter.Services.TimelineService.API.Application.IntegrationEventHandl
             _timelineGraphRepository = timelineGraphRepository ?? throw new ArgumentNullException(nameof(timelineGraphRepository));
         }
 
-        public async Task HandleMessageAsync(string messageType, UserFollowedIntegrationEvent message, CancellationToken cancellationToken)
+        public async Task HandleMessageAsync(string messageType, UserUnfollowedIntegrationEvent message, CancellationToken cancellationToken)
         {
             await _timelineGraphRepository.DeleteFollowerAsync(message.FollowerId, message.FollowingId);
         }

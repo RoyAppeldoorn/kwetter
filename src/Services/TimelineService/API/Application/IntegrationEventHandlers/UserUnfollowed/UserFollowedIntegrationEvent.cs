@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Kwetter.Services.TimelineService.API.Application.IntegrationEventHandlers.UserFollowed
+namespace Kwetter.Services.TimelineService.API.Application.IntegrationEventHandlers.UserUnfollowed
 {
     public class UserUnfollowedIntegrationEvent
     {

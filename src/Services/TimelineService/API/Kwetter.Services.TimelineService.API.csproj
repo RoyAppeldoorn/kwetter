@@ -15,10 +15,4 @@
     <ProjectReference Include="..\..\Common\Infrastructure\Kwetter.Services.Common.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Application\IntegrationEventHandlers\KweetCreated\" />
-    <Folder Include="Application\IntegrationEventHandlers\KweetLiked\" />
-    <Folder Include="Application\IntegrationEventHandlers\KweetUnliked\" />
-  </ItemGroup>
-
 </Project>
