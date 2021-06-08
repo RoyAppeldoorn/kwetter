@@ -87,6 +87,25 @@
       "AddHeadersToRequest": {
         "UserId": "Claims[UserId] > value > |"
       }
+    },
+    {
+      "DownstreamPathTemplate": "/api/timeline",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7401
+        }
+      ],
+      "UpstreamPathTemplate": "/api/timeline",
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "firebase",
+        "AllowedScopes": []
+      },
+      "AddHeadersToRequest": {
+        "UserId": "Claims[UserId] > value > |"
+      }
     }
   ],
   "GlobalConfiguration": {
