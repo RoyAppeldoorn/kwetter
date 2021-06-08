@@ -56,7 +56,7 @@ namespace Kwetter.Services.Common.Infrastructure.Messaging
                 else
                 {
                     // Reject the message and put it back on the queue for trying again.
-                    _channel.BasicReject(evt2.DeliveryTag, true);
+                    _channel.BasicReject(evt2.DeliveryTag, false);
                 }
             };
 
