@@ -30,8 +30,4 @@
     <ProjectReference Include="..\..\Common\Infrastructure\Kwetter.Services.Common.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Application\DomainEventHandlers\" />
-  </ItemGroup>
-
 </Project>
