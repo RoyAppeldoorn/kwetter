@@ -1,5 +1,5 @@
 ﻿using Kwetter.Services.Common.Infrastructure.Messaging;
-using Kwetter.Services.UserService.API.Application.DomainEventHandlers.UserCreated;
+using Kwetter.Services.UserService.API.Application.DomainEvents;
 using Kwetter.Services.UserService.API.Domain;
 using Kwetter.Services.UserService.API.Infrastructure.Repository;
 using System;

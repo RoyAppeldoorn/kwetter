@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Kwetter.Services.FollowService.API.Application.DomainEventHandlers.UserUnfollowed
+namespace Kwetter.Services.FollowService.API.Application.DomainEvents.UserUnfollowed
 {
     public class UserUnfollowedDomainEvent
     {

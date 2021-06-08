@@ -1,12 +1,10 @@
 ﻿using Kwetter.Services.Common.API.CQRS;
 using Kwetter.Services.Common.Infrastructure.Messaging;
-using Kwetter.Services.FollowService.API.Application.DomainEventHandlers.UserUnfollowed;
+using Kwetter.Services.FollowService.API.Application.DomainEvents.UserUnfollowed;
 using Kwetter.Services.FollowService.API.Domain;
 using Kwetter.Services.FollowService.API.Infrastructure.Repositories;
 using MediatR;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 

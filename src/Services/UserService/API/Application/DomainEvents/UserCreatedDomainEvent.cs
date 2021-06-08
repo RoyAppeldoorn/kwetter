@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Kwetter.Services.UserService.API.Application.DomainEventHandlers.UserCreated
+namespace Kwetter.Services.UserService.API.Application.DomainEvents
 {
     public class UserCreatedDomainEvent
     {

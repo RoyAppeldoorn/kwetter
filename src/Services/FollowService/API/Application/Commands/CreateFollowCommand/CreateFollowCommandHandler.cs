@@ -1,6 +1,6 @@
 ﻿using Kwetter.Services.Common.API.CQRS;
 using Kwetter.Services.Common.Infrastructure.Messaging;
-using Kwetter.Services.FollowService.API.Application.DomainEventHandlers.UserFollowed;
+using Kwetter.Services.FollowService.API.Application.DomainEvents.UserFollowed;
 using Kwetter.Services.FollowService.API.Domain;
 using Kwetter.Services.FollowService.API.Infrastructure.Repositories;
 using MediatR;

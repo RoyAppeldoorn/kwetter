@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Kwetter.Services.FollowService.API.Application.DomainEventHandlers.UserFollowed
+namespace Kwetter.Services.FollowService.API.Application.DomainEvents.UserFollowed
 {
     public class UserFollowedDomainEvent
     {
