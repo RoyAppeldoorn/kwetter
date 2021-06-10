@@ -11,6 +11,7 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const loggedIn = computed(() => store.getters[AuthGetterTypes.GET_IS_LOGGED_IN]);
+    const user = computed(() => store.getters[AuthGetterTypes.GET_USER]);
 
     const signOut = async () => {
       store.dispatch(AuthActionTypes.SET_USER_DATA, null);
@@ -18,7 +19,7 @@ export default defineComponent({
       router.push('/login');
     };
 
-    return { signOut, loggedIn };
+    return { signOut, loggedIn, user };
   },
 });
 </script>
@@ -76,7 +77,7 @@ export default defineComponent({
                   <span class="sr-only">Open user menu</span>
                   <img
                     class="w-8 h-8 rounded-xl"
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    :src="'https://eu.ui-avatars.com/api/?name=' + user.userName"
                     alt=""
                   />
                 </button>
