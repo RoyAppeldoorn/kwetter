@@ -73,7 +73,7 @@ namespace Kwetter.Services.TimelineService.API.Infrastructure
         public async Task DeleteKweetLikeAsync(Guid userId, Guid kweetId)
         {
             await _client.Cypher
-                .Match("(user:User)-[like:LIKED_BY]->(kweet:Kweet)")
+                .Match("(user:User)<-[like:LIKED_BY]-(kweet:Kweet)")
                 .Where((User user) => user.Id == userId)
                 .AndWhere((Kweet kweet) => kweet.Id == kweetId)
                 .Delete("like")
@@ -90,19 +90,34 @@ namespace Kwetter.Services.TimelineService.API.Infrastructure
                 PageSize = pageSize
             };
 
-            var query = _client.Cypher
+            var results = await _client.Cypher
                 .Match("(user:User)<-[:FOLLOWED_BY]-(user2:User)<-[:KWEETED_BY]-(kweet:Kweet)")
                 .Where((User user) => user.Id == userId)
+                .Call("{WITH kweet OPTIONAL MATCH(user:User)<-[:LIKED_BY]-(kweet) RETURN(user.Id IS NOT NULL) as liked}")
+                .Call("{WITH kweet OPTIONAL MATCH(liker:User)<-[:LIKED_BY]-(kweet) RETURN liker}")
+                .Return((user2, kweet, liked, liker) => new
+                {
+                    User = user2.As<User>(),
+                    Kweet = kweet.As<Kweet>(),
+                    Liked = liked.As<bool>(),
+                    Likes = liker.Count(),
+                })
+                .OrderByDescending("kweet.CreatedDateTime")
                 .Skip((int)pageNumber * (int)pageSize)
                 .Limit((int)pageSize)
-                .Return((user, kweet) => new
-                {
-                    User = user.As<User>(),
-                    Kweets = kweet.CollectAs<Kweet>(),
-                });
-            var kek = (await query.ResultsAsync);
-            //timeline.Kweets = (await query.ResultsAsync).ToList();
-            
+                .ResultsAsync;
+
+            timeline.Kweets = results.Select(result => new TimelineKweet()
+            {
+                Id = result.Kweet.Id,
+                UserId = result.User.Id,
+                Message = result.Kweet.Message,
+                Username = result.User.Username,
+                LikeCount = (int)result.Likes,
+                Liked = result.Liked,
+                CreatedDateTime = result.Kweet.CreatedDateTime
+            }).ToList();
+
             return timeline;
         }
     }
