@@ -1,13 +1,17 @@
 <script lang="ts">
 import { AuthGetterTypes } from '@/modules/auth/store/auth.getters';
 import { useStore } from '@/store';
-import { computed, defineComponent, reactive, ref } from 'vue';
+import { computed, defineComponent, onBeforeMount, reactive, ref } from 'vue';
 import { KweetActionTypes } from '../kweet/store/kweet.actions';
-import CreateKweetCommand from '../kweet/dto/CreateKweetCommand';
+import CreateKweetCommand from '../kweet/dto/commands/createKweetCommand';
 import { User } from '../auth/types';
 import Guid from '@/utils/guid';
+import LoadingSpinner from '@/components/LoadingSpinner.vue';
+import KweetCard from '../kweet/components/KweetCard.vue';
+import { KweetGetterTypes } from '../kweet/store/kweet.getters';
 
 export default defineComponent({
+  components: { LoadingSpinner, KweetCard },
   name: 'Home',
   setup() {
     const store = useStore();
@@ -17,7 +21,15 @@ export default defineComponent({
     const remainingKweetCharacters = ref('Remaining 140 characters');
     const input = reactive({ kweet });
     const inputEmpty = computed(() => input.kweet === '');
-    return { user, inputEmpty, postKweet, input, remainingKweetCharacters, remainingCharCount };
+    const pageNumber = ref(0);
+    const pageSize = ref(5);
+    const kweets = computed(() => store.getters[KweetGetterTypes.GET_HOME_FEED]);
+    const isLoading = ref(true);
+
+    onBeforeMount(async () => {
+      await fetchTweets();
+      isLoading.value = false;
+    });
 
     async function postKweet(): Promise<void> {
       const user: User | null = store.getters[AuthGetterTypes.GET_USER];
@@ -36,6 +48,10 @@ export default defineComponent({
       }
     }
 
+    async function fetchTweets(): Promise<void> {
+      await store.dispatch(KweetActionTypes.GET_HOME_FEED, { pageNumber: pageNumber.value, pageSize: pageSize.value });
+    }
+
     function remainingCharCount() {
       if (input.kweet.length > kweetMaxCharacters.value) {
         input.kweet = input.kweet.substring(0, kweetMaxCharacters.value);
@@ -44,6 +60,8 @@ export default defineComponent({
         remainingKweetCharacters.value = 'Remaining ' + remainCharacters + ' characters';
       }
     }
+
+    return { user, inputEmpty, postKweet, input, remainingKweetCharacters, remainingCharCount, kweets, isLoading };
   },
 });
 </script>
@@ -72,6 +90,17 @@ export default defineComponent({
         </button>
       </div>
     </form>
+    <div v-if="isLoading" class="flex justify-center">
+      <LoadingSpinner />
+    </div>
+    <div v-else-if="!kweets.length" class="flex justify-center mt-2">
+      Start following users to populate your timeline!
+    </div>
+    <div v-else>
+      <div v-for="kweet in kweets" :key="kweet.id">
+        <KweetCard :kweet="kweet" />
+      </div>
+    </div>
     <!-- <div>{{ user }}</div> -->
   </div>
 </template>

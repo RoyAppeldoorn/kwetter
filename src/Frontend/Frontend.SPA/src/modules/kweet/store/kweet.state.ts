@@ -1,3 +1,9 @@
-export type KweetState = {};
+import { Kweet } from '../types';
 
-export const kweetState: KweetState = {};
+export type KweetState = {
+  kweetHomeFeed: Kweet[] | null;
+};
+
+export const kweetState: KweetState = {
+  kweetHomeFeed: null,
+};
