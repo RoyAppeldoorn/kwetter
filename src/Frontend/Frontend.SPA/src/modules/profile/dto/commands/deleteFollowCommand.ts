@@ -1,5 +1,4 @@
-export default interface CreateFollow {
+export default interface DeleteFollowCommand {
   followingId: string;
   followerId: string;
 }
-  

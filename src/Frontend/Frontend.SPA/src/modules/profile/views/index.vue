@@ -53,7 +53,7 @@ export default defineComponent({
         }
       );
     });
-    0;
+
     return {
       profile,
       followers,

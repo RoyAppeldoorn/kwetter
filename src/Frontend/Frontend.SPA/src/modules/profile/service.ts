@@ -1,12 +1,12 @@
 import CommandResult from '@/models/cqrs/commandResult';
 import QueryResponse from '@/models/cqrs/queryResponse';
 import { httpClient } from '@/utils/httpClient';
-import CreateFollow from './dto/createFollow';
-import GetFollowByUserIdQuery from './dto/getFollowByUserIdQuery';
-import GetProfileDetailsQuery from './dto/getProfileDetailsQuery';
+import CreateFollowCommand from './dto/commands/createFollowCommand';
+import GetFollowByUserIdQuery from './dto/queries/getFollowByUserIdQuery';
+import GetProfileDetailsQuery from './dto/queries/getProfileDetailsQuery';
 import { GetFollowByUserIdResponse } from './dto/response/getFollowByUserIdResponse';
 import { GetProfileDetailsResponse } from './dto/response/getProfileDetailsResponse';
-import DeleteFollow from './dto/deleteFollow';
+import DeleteFollowCommand from './dto/commands/deleteFollowCommand';
 
 export const getProfileByName = async (username: string): Promise<QueryResponse<GetProfileDetailsResponse>> => {
   const query: GetProfileDetailsQuery = {
@@ -29,19 +29,19 @@ export const getProfileFollowByUserId = async (userId: string): Promise<QueryRes
 };
 
 export const createFollow = async (followingId: string, followerId: string): Promise<CommandResult> => {
-  const query: CreateFollow = {
+  const query: CreateFollowCommand = {
     followingId: followingId,
     followerId: followerId,
   };
 
-  return await httpClient.post<CreateFollow, CommandResult>('/api/follow', query);
+  return await httpClient.post<CreateFollowCommand, CommandResult>('/api/follow', query);
 };
 
 export const deleteFollow = async (followingId: string, followerId: string): Promise<CommandResult> => {
-  const query: DeleteFollow = {
+  const query: DeleteFollowCommand = {
     followingId: followingId,
     followerId: followerId,
   };
 
-  return await httpClient.delete<DeleteFollow, CommandResult>('/api/follow', query);
+  return await httpClient.delete<DeleteFollowCommand, CommandResult>('/api/follow', query);
 };
