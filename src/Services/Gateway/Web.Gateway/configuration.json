@@ -20,6 +20,25 @@
       }
     },
     {
+      "DownstreamPathTemplate": "/api/kweet/like",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7001
+        }
+      ],
+      "UpstreamPathTemplate": "/api/kweet/like",
+      "UpstreamHttpMethod": [ "Post", "Delete" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "firebase",
+        "AllowedScopes": []
+      },
+      "AddHeadersToRequest": {
+        "UserId": "Claims[UserId] > value > |"
+      }
+    },
+    {
       "DownstreamPathTemplate": "/api/follow",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
