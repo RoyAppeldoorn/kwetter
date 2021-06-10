@@ -45,6 +45,10 @@ namespace Kwetter.Services.KweetService.API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> LikeAsync(LikeKweetCommand command)
         {
+            HttpContext.Request.Headers.TryGetValue("UserId", out var userId);
+            if (command.UserId != Guid.Parse(userId))
+                return UnauthorizedCommand();
+
             CommandResult commandResult = await _mediator.Send(command);
             return commandResult.Success
                 ? new OkObjectResult(commandResult)
@@ -57,6 +61,10 @@ namespace Kwetter.Services.KweetService.API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> UnlikeAsync(UnlikeKweetCommand command)
         {
+            HttpContext.Request.Headers.TryGetValue("UserId", out var userId);
+            if (command.UserId != Guid.Parse(userId))
+                return UnauthorizedCommand();
+
             CommandResult commandResult = await _mediator.Send(command);
             return commandResult.Success
                 ? new OkObjectResult(commandResult)
