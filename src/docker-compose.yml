@@ -1,34 +1,115 @@
 version: '3'
 
 services:
-  #kweet-service:
-  #  image: royappeldoorn/kwetter-kweet-service:latest
-  #  expose:
-  #    - 8080
-  #  environment:
-  #  - ConnectionStrings__KweetDatabase=Server=mysql;port=${KWEET_SERVICE_PORT};Database=kwetter-kweet-service;User Id=${KWEET_SERVICE_USER};Password=${KWEET_SERVICE_PASSWORD}
-  #  ports:
-  #    - "8080:80"
-  #  depends_on:
-  #    - mysql
-
   rabbitmq:
     image: "rabbitmq:3-management"
+    hostname: mabbit
     ports:
       - "15672:15672"
       - "5672:5672"
     volumes:
-      - rabbitmq:/rabbitmq
+      - rabbitmq-data:/var/lib/rabbitmq
 
   mysql:
     image: mysql
     environment:
        MYSQL_ROOT_PASSWORD: test
-    expose:
-      - 3306
     ports:
       - "3308:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  neo4j:
+    image: neo4j:latest
+    hostname: neo4j
+    container_name: neo4j
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - ./conf:/conf
+      - ./data:/data
+      - ./import:/import
+      - ./logs:/logs
+      - ./plugins:/plugins
+    environment: 
+      - NEO4J_dbms_memory_pagecache_size=1G
+      - NEO4J_dbms.memory.heap.initial_size=1G
+      - NEO4J_dbms_memory_heap_max__size=1G
+      - NEO4J_AUTH=neo4j/test
+      - NEO4J_dbms.allow_upgrade=true
+
+  gateway:
+    image: gateway:latest
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+    ports:
+      - "5000:80"
+    depends_on:
+      - kweet-service
+      - authorization-service
+      - follow-service
+      - user-service
+      - timeline-service
+
+  kweet-service:
+    image: kweet-service:latest
+    environment:
+      - ConnectionStrings__KweetDatabase=Server=mysql;port=${SERVICE_PORT};Database=kwetter-kweet-service;User Id=${SERVICE_USER};Password=${SERVICE_PASSWORD}
+      - Messaging__Host=rabbitmq
+    ports:
+      - "7000:80"
+    depends_on:
+      - mysql
+      - rabbitmq
+
+  authorization-service:
+    image: authorization-service:latest
+    environment:
+      - ConnectionStrings__KweetDatabase=Server=mysql;port=${SERVICE_PORT};Database=kwetter-authorization-service;User Id=${SERVICE_USER};Password=${SERVICE_PASSWORD}
+      - Messaging__Host=rabbitmq
+    ports:
+      - "7001:80"
+    depends_on:
+      - mysql
+      - rabbitmq
+
+  user-service:
+    image: user-service:latest
+    environment:
+      - ConnectionStrings__KweetDatabase=Server=mysql;port=${SERVICE_PORT};Database=kwetter-user-service;User Id=${SERVICE_USER};Password=${SERVICE_PASSWORD}
+      - Messaging__Host=rabbitmq
+    ports:
+      - "7002:80"
+    depends_on:
+      - mysql
+      - rabbitmq
+
+  follow-service:
+    image: follow-service:latest
+    environment:
+      - ConnectionStrings__KweetDatabase=Server=mysql;port=${SERVICE_PORT};Database=kwetter-follow-service;User Id=${SERVICE_USER};Password=${SERVICE_PASSWORD}
+      - Messaging__Host=rabbitmq
+    ports:
+      - "7003:80"
+    depends_on:
+      - mysql
+      - rabbitmq
+
+  timeline-service:
+    image: timeline-service:latest
+    environment:
+      - Messaging__Host=rabbitmq
+    ports:
+      - "7004:80"
+    depends_on:
+      - mysql
+      - rabbitmq
 
 volumes:
-  rabbitmq:
+  neo4j:
+    driver: local
+  rabbitmq-data:
+    driver: local
+  mysql-data:
     driver: local
