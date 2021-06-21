@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Kwetter.Services.Common.API.CQRS;
+using Kwetter.Services.UserService.API.Application.Queries.GetProfileByName;
+using MediatR;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace Kwetter.Services.UserService.API.Controllers
@@ -10,36 +11,28 @@ namespace Kwetter.Services.UserService.API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        // GET: api/<UserController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly IMediator _mediator;
+
+        public UserController(IMediator mediator)
         {
-            return new string[] { "value1", "value2" };
+            _mediator = mediator;
         }
 
-        // GET api/<UserController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{username}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetProfileByNameAsync(string username)
         {
-            return "value";
-        }
+            GetProfileByNameQuery getProfileByNameQuery = new()
+            {
+                Username = username
+            };
 
-        // POST api/<UserController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<UserController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<UserController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            QueryResponse<ProfileDto> queryResponse = await _mediator.Send(getProfileByNameQuery);
+            return queryResponse.Success
+                ? new OkObjectResult(queryResponse)
+                : new BadRequestObjectResult(queryResponse);
         }
     }
 }

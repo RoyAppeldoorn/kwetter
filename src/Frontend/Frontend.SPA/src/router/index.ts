@@ -1,31 +1,25 @@
-import UserRoutes from '@/modules/user/user.routes';
-import { createRouter, createWebHistory } from 'vue-router';
-// import Home from '../views/Home.vue';
-// import NotFound from '../views/NotFound.vue';
+import isAuthenticated from '@/guards/isAuthenticated';
+import requiresAuth from '@/guards/requiresAuth';
+import AuthRoutes from '@/modules/auth/routes';
+import { rootStore } from '@/store';
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import homeRoutes from '@/modules/home/routes';
+import profileRoutes from '@/modules/profile/routes';
+import catchAll from '@/modules/layout/routes';
 
-// const routes: Array<RouteRecordRaw> = [
-//   {
-//     path: '/',
-//     name: 'Home',
-//     component: Home,
-//   },
-//   {
-//     path: '/about',
-//     name: 'About',
-//     // route level code-splitting
-//     // this generates a separate chunk (about.[hash].js) for this route
-//     // which is lazy-loaded when the route is visited.
-//     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
-//   },
-//   {
-//     path: '/:catchAll(.*)',
-//     component: NotFound,
-//   },
-// ];
+const routes: RouteRecordRaw[] = [...AuthRoutes, homeRoutes, profileRoutes, catchAll];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes: [...UserRoutes],
+  routes: routes,
+});
+
+router.beforeEach(async (to, from, next) => {
+  if (to.matched.some((route) => route.meta.requiresAuth)) {
+    await requiresAuth({ to, from, next, rootStore });
+  } else {
+    await isAuthenticated({ to, from, next, rootStore });
+  }
 });
 
 export default router;

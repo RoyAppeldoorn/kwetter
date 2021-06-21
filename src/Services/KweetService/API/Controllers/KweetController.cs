@@ -7,6 +7,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Kwetter.Services.KweetService.API.Controllers
@@ -28,6 +29,10 @@ namespace Kwetter.Services.KweetService.API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CreateAsync(CreateKweetCommand command)
         {
+            HttpContext.Request.Headers.TryGetValue("UserId", out var userId);
+            if (command.UserId != Guid.Parse(userId))
+                return UnauthorizedCommand();
+            
             CommandResult commandResult = await _mediator.Send(command);
             return commandResult.Success
                 ? new CreatedAtRouteResult(new { Id = command.KweetId }, commandResult)
@@ -40,6 +45,10 @@ namespace Kwetter.Services.KweetService.API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> LikeAsync(LikeKweetCommand command)
         {
+            HttpContext.Request.Headers.TryGetValue("UserId", out var userId);
+            if (command.UserId != Guid.Parse(userId))
+                return UnauthorizedCommand();
+
             CommandResult commandResult = await _mediator.Send(command);
             return commandResult.Success
                 ? new OkObjectResult(commandResult)
@@ -52,6 +61,10 @@ namespace Kwetter.Services.KweetService.API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> UnlikeAsync(UnlikeKweetCommand command)
         {
+            HttpContext.Request.Headers.TryGetValue("UserId", out var userId);
+            if (command.UserId != Guid.Parse(userId))
+                return UnauthorizedCommand();
+
             CommandResult commandResult = await _mediator.Send(command);
             return commandResult.Success
                 ? new OkObjectResult(commandResult)
@@ -62,10 +75,19 @@ namespace Kwetter.Services.KweetService.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetKweetsByUserIdAsync(Guid UserId)
+        public async Task<IActionResult> GetKweetsByUserIdAsync(Guid userId)
         {
-            var result = await _mediator.Send(new GetKweetsByUserIdQuery(UserId));
+            var result = await _mediator.Send(new GetKweetsByUserIdQuery(userId));
             return result != null ? Ok(result) : BadRequest();
+        }
+
+        private IActionResult UnauthorizedCommand()
+        {
+            return Unauthorized(new CommandResult()
+            {
+                Errors = new List<string>() { "The user id claim does not match the provided user id" },
+                Success = false
+            });
         }
     }
 }

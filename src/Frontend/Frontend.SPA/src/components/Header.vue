@@ -1,50 +1,60 @@
+<script lang="ts">
+import { AuthActionTypes } from '@/modules/auth/store/auth.actions';
+import { AuthGetterTypes } from '@/modules/auth/store/auth.getters';
+import { auth } from '@/plugins/firebase';
+import router from '@/router';
+import { useStore } from '@/store';
+import { computed, defineComponent } from 'vue';
+
+export default defineComponent({
+  name: 'Header',
+  setup() {
+    const store = useStore();
+    const loggedIn = computed(() => store.getters[AuthGetterTypes.GET_IS_LOGGED_IN]);
+    const user = computed(() => store.getters[AuthGetterTypes.GET_USER]);
+
+    const signOut = async () => {
+      store.dispatch(AuthActionTypes.SET_USER_DATA, null);
+      await auth.signOut();
+      router.push('/login');
+    };
+
+    return { signOut, loggedIn, user };
+  },
+});
+</script>
+
 <template>
   <nav>
     <div class="px-2 mb-6 sm:px-6 lg:px-8">
       <div class="relative flex items-center justify-between h-16">
-        <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-          <!-- Mobile menu button-->
-          <button
-            type="button"
-            class="inline-flex items-center justify-center p-2 text-gray-400 rounded-md hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-            aria-controls="mobile-menu"
-            aria-expanded="false"
-          >
-            <span class="sr-only">Open main menu</span>
-            <!--
-            Icon when menu is closed.
-
-            Heroicon name: outline/menu
-
-            Menu open: "hidden", Menu closed: "block"
-          -->
-            <svg class="block w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-            <!--
-            Icon when menu is open.
-
-            Heroicon name: outline/x
-
-            Menu open: "block", Menu closed: "hidden"
-          -->
-            <svg class="hidden w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-        <div class="flex items-center justify-center flex-1 sm:items-stretch sm:justify-between">
+        <div class="flex items-center justify-between flex-1">
           <div class="flex items-center flex-shrink-0">
             <img class="w-auto" src="@/assets/logo.svg" alt="Kwetter" />
           </div>
-          <div class="items-center hidden sm:flex sm:ml-6">hoi</div>
-          <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+          <div
+            class="absolute inset-y-0 right-0 flex items-center pr-2 space-x-4 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
+          >
             <button
-              class="p-1 text-gray-400 bg-gray-800 rounded-full hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+              @click="signOut"
+              class="px-2 py-1 text-gray-400 bg-gray-800 rounded-xl hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+            >
+              Sign out
+            </button>
+
+            <button
+              class="p-1 text-gray-400 bg-gray-800 rounded-xl hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
             >
               <span class="sr-only">View notifications</span>
               <!-- Heroicon name: outline/bell -->
-              <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <svg
+                class="w-6 h-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -59,15 +69,15 @@
               <div>
                 <button
                   type="button"
-                  class="flex text-sm bg-gray-800 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                  class="flex text-sm bg-gray-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                   id="user-menu"
                   aria-expanded="false"
                   aria-haspopup="true"
                 >
                   <span class="sr-only">Open user menu</span>
                   <img
-                    class="w-8 h-8 rounded-full"
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    class="w-8 h-8 rounded-xl"
+                    :src="'https://eu.ui-avatars.com/api/?name=' + user.userName"
                     alt=""
                   />
                 </button>
@@ -75,18 +85,6 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-
-    <!-- Mobile menu, show/hide based on menu state. -->
-    <div class="sm:hidden" id="mobile-menu">
-      <div class="px-2 pt-2 pb-3 space-y-1">
-        <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-        <a href="#" class="block px-3 py-2 text-base font-medium text-white bg-gray-900 rounded-md" aria-current="page">Feed</a>
-
-        <a href="#" class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white">Mentions</a>
-
-        <a href="#" class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white">Profile</a>
       </div>
     </div>
   </nav>

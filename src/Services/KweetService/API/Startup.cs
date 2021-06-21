@@ -1,6 +1,7 @@
 using Kwetter.Services.Common.API;
-using Kwetter.Services.KweetService.API.DataAccess;
-using Kwetter.Services.KweetService.API.DataAccess.Repositories;
+using Kwetter.Services.Common.Infrastructure;
+using Kwetter.Services.KweetService.API.Infrastructure;
+using Kwetter.Services.KweetService.API.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -25,19 +26,20 @@ namespace Kwetter.Services.KweetService.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<KweetDbContext>(options =>
-                options.UseSqlServer(_configuration.GetConnectionString("KweetDatabase"))
-            );
-
+            var sqlConnectionString = _configuration.GetConnectionString("KweetDatabase");
+            services.AddDbContext<KweetDbContext>(
+                dbContextOptions => dbContextOptions
+                    .UseMySql(sqlConnectionString, ServerVersion.AutoDetect(sqlConnectionString)));
             services.AddTransient<IKweetRepository, KweetRepository>();
-
             services.AddDefaultApplicationServices(Assembly.GetAssembly(typeof(Startup)));
+            services.AddMessagePublishing("KweetService");
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
             });
+            services.VerifyDatabaseConnection<KweetDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,8 +52,6 @@ namespace Kwetter.Services.KweetService.API
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
             }
 
-            ApplyDatabaseMigrations(app.ApplicationServices);
-
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -62,18 +62,6 @@ namespace Kwetter.Services.KweetService.API
             {
                 endpoints.MapControllers();
             });
-        }
-
-        private static void ApplyDatabaseMigrations(IServiceProvider applicationServices)
-        {
-            using var serviceScope = applicationServices
-                .GetRequiredService<IServiceScopeFactory>()
-                .CreateScope();
-
-            using var context = new KweetDbContext(serviceScope.ServiceProvider
-                .GetRequiredService<DbContextOptions<KweetDbContext>>());
-
-            context.Database.Migrate();
         }
     }
 }

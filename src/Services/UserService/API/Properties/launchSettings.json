@@ -16,12 +16,12 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "API": {
+    "UserService": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:7101;http://localhost:7100",
+      "applicationUrl": "https://localhost:7301;http://localhost:7300",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

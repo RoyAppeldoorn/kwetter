@@ -9,11 +9,37 @@
           "Port": 7001
         }
       ],
-      "UpstreamPathTemplate": "/kweet",
-      "UpstreamHttpMethod": [ "Get" ]
+      "UpstreamPathTemplate": "/api/kweet",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "firebase",
+        "AllowedScopes": []
+      },
+      "AddHeadersToRequest": {
+        "UserId": "Claims[UserId] > value > |"
+      }
     },
     {
-      "DownstreamPathTemplate": "/api/user",
+      "DownstreamPathTemplate": "/api/kweet/like",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7001
+        }
+      ],
+      "UpstreamPathTemplate": "/api/kweet/like",
+      "UpstreamHttpMethod": [ "Post", "Delete" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "firebase",
+        "AllowedScopes": []
+      },
+      "AddHeadersToRequest": {
+        "UserId": "Claims[UserId] > value > |"
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/follow",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -21,11 +47,87 @@
           "Port": 7101
         }
       ],
-      "UpstreamPathTemplate": "/user",
-      "UpstreamHttpMethod": [ "Get" ]
+      "UpstreamPathTemplate": "/api/follow",
+      "UpstreamHttpMethod": [ "Post", "Delete" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "firebase",
+        "AllowedScopes": []
+      },
+      "AddHeadersToRequest": {
+        "UserId": "Claims[UserId] > value > |"
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/follow/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7101
+        }
+      ],
+      "UpstreamPathTemplate": "/api/follow/{everything}",
+      "UpstreamHttpMethod": [ "Post", "Delete", "Get" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "firebase",
+        "AllowedScopes": []
+      },
+      "AddHeadersToRequest": {
+        "UserId": "Claims[UserId] > value > |"
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/authorization/claims",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7201
+        }
+      ],
+      "UpstreamPathTemplate": "/api/authorization/claims",
+      "UpstreamHttpMethod": [ "Post" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/{username}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7301
+        }
+      ],
+      "UpstreamPathTemplate": "/api/user/{username}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "firebase",
+        "AllowedScopes": []
+      },
+      "AddHeadersToRequest": {
+        "UserId": "Claims[UserId] > value > |"
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/timeline",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7401
+        }
+      ],
+      "UpstreamPathTemplate": "/api/timeline",
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "firebase",
+        "AllowedScopes": []
+      },
+      "AddHeadersToRequest": {
+        "UserId": "Claims[UserId] > value > |"
+      }
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:5000"
+    "BaseUrl": "https://localhost:5001"
   }
 }

@@ -11,9 +11,7 @@ using System.Threading.Tasks;
 
 namespace Kwetter.Services.Common.API.CQRS.Behavior
 {
-    public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> 
-        where TResponse : CommandResult, new()
-        where TRequest : IRequest<TResponse>
+    public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
     {
         private readonly ILogger<ValidationBehavior<TRequest, TResponse>> _logger;
         private readonly IEnumerable<IValidator<TRequest>> _validators;
@@ -35,22 +33,24 @@ namespace Kwetter.Services.Common.API.CQRS.Behavior
             if (!_anyValidators)
                 return await next();
 
-            _logger.LogInformation($"{_validatorName}: Started.");
+            _logger.LogInformation($"{_validatorName} started.");
+            ValidationContext<TRequest> context = new(request);
+            List<ValidationFailure> failures = new();
 
-            var context = new ValidationContext<TRequest>(request);
-
-            var validationResults = await Task.WhenAll(_validators.Select(v => v.ValidateAsync(context, cancellationToken)));
-            var failures = validationResults.SelectMany(r => r.Errors).Where(f => f != null).ToList();
-
-            if (failures.Any())
+            foreach (IValidator<TRequest> validator in _validators)
             {
-                _logger.LogWarning($"{_validatorName}: Completed. Validation Errors for type {typeof(TRequest).Name}", failures);
-                TResponse response = new();
-                response.Errors.AddRange(failures.Select(validationFailure => validationFailure.ErrorMessage));
-                return response;
+                ValidationResult validationResult = await validator.ValidateAsync(context, cancellationToken);
+                if (!validationResult.IsValid)
+                    failures.AddRange(validationResult.Errors);
             }
 
-            _logger.LogInformation($"{_validatorName}: Completed with 0 errors.");
+            if (failures.Count != 0)
+            {
+                _logger.LogWarning($"{_validatorName}: completed with {failures.Count} validation failure{(failures.Count > 1 ? "s" : "")}.");
+                throw new ValidationException($"Command Validation Errors for type {typeof(TRequest).Name}", failures);
+            }
+
+            _logger.LogInformation($"{_validatorName} completed.");
             return await next();
         }
     }

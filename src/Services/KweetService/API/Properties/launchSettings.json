@@ -16,7 +16,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "API": {
+    "KweetService": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
