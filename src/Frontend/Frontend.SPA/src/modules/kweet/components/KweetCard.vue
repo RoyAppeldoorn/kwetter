@@ -5,6 +5,7 @@ import { useStore } from '@/store';
 import { computed, defineComponent, PropType, ref } from 'vue';
 import { KweetActionTypes } from '../store/kweet.actions';
 import { Kweet } from '../types';
+import { timeSince } from '@/utils/timeFromNow';
 
 export default defineComponent({
   components: { IconHeart },
@@ -35,7 +36,7 @@ export default defineComponent({
       alreadyLiked.value = !alreadyLiked.value;
     }
 
-    return { likeOrUnlikeKweet, alreadyLiked, likeCount, user };
+    return { likeOrUnlikeKweet, alreadyLiked, likeCount, user, timeSince };
   },
 });
 </script>
@@ -49,7 +50,7 @@ export default defineComponent({
           <span class="text-lg font-bold">{{ kweet.username }}</span>
           <span class="ml-2 text-sm text-gray-500 sm:ml-4">@{{ kweet.username }}</span>
           <span class="self-stretch ml-2 text-sm font-bold text-gray-500">.</span>
-          <span class="ml-2 text-sm text-gray-500">{{ new Date(kweet.createdDateTime).toLocaleString() }}</span>
+          <span class="ml-2 text-sm text-gray-500">{{ timeSince(kweet.createdDateTime) }}</span>
         </div>
         <div>
           {{ kweet.message }}
